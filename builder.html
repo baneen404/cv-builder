@@ -48,18 +48,26 @@
             border-bottom: 1px solid var(--border);
             flex-shrink: 0;
             z-index: 100;
+            position: relative;
         }
         .logo { font-size: 1.3rem; font-weight: 700; text-decoration: none; color: var(--text); }
         .logo span { color: var(--primary); }
-        .top-actions { display: flex; gap: 0.8rem; align-items: center; }
+        .top-actions { display: flex; gap: 0.8rem; align-items: center; position: relative; }
         .icon-btn { background: none; border: 1px solid var(--border); color: var(--text); width: 36px; height: 36px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; transition: all 0.2s; }
         .icon-btn:hover { border-color: var(--primary); color: var(--primary); }
         .btn-back { background: none; border: 1px solid var(--border); color: var(--text); padding: 0.4rem 1rem; border-radius: 30px; cursor: pointer; font-size: 0.85rem; font-family: 'Geist', sans-serif; transition: all 0.2s; }
         .btn-back:hover { border-color: var(--primary); color: var(--primary); }
         .btn-download { background: var(--primary); color: #fff; border: none; padding: 0.4rem 1.2rem; border-radius: 30px; cursor: pointer; font-weight: 600; font-size: 0.85rem; font-family: 'Geist', sans-serif; transition: all 0.2s; display: flex; align-items: center; gap: 0.4rem; }
-        .btn-download:hover { background: var(--primary-hover); transform: translateY(-1px); }
+        .btn-download:hover:not(:disabled) { background: var(--primary-hover); transform: translateY(-1px); }
+        .btn-download:disabled { opacity: 0.45; cursor: not-allowed; transform: none; }
+        .dot-menu { display: none; position: absolute; top: 48px; right: 0; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 6px; z-index: 9999; min-width: 170px; box-shadow: 0 10px 30px rgba(0,0,0,0.4); }
+        .dot-menu.open { display: block; }
+        .dot-menu-item { width: 100%; text-align: left; padding: 8px 12px; background: none; border: none; color: var(--text); font-family: 'Geist', sans-serif; font-size: 0.85rem; cursor: pointer; border-radius: 8px; display: block; transition: background 0.15s; }
+        .dot-menu-item:hover { background: rgba(249,115,22,0.1); }
+        .dot-menu-item.danger { color: var(--danger); }
+        .dot-menu-item.danger:hover { background: rgba(239,68,68,0.1); }
 
-        /* TEMPLATE SWITCHER */
+        /* TEMPLATE BAR */
         .template-bar {
             background: var(--surface);
             padding: 0.5rem 1.5rem;
@@ -69,72 +77,29 @@
             flex-shrink: 0;
             overflow-x: auto;
         }
-        .temp-btn {
-            background: none;
-            border: 1px solid var(--border);
-            color: var(--muted);
-            padding: 0.3rem 1rem;
-            border-radius: 30px;
-            cursor: pointer;
-            font-size: 0.8rem;
-            font-weight: 500;
-            font-family: 'Geist', sans-serif;
-            white-space: nowrap;
-            transition: all 0.2s;
-        }
+        .temp-btn { background: none; border: 1px solid var(--border); color: var(--muted); padding: 0.3rem 1rem; border-radius: 30px; cursor: pointer; font-size: 0.8rem; font-weight: 500; font-family: 'Geist', sans-serif; white-space: nowrap; transition: all 0.2s; }
         .temp-btn.active, .temp-btn:hover { background: var(--primary); color: #fff; border-color: var(--primary); }
 
         /* MAIN LAYOUT */
         .builder { display: flex; flex: 1; overflow: hidden; }
 
         /* FORM PANEL */
-        .form-panel {
-            width: 420px;
-            min-width: 420px;
-            background: var(--surface);
-            overflow-y: auto;
-            border-right: 1px solid var(--border);
-            display: flex;
-            flex-direction: column;
-        }
+        .form-panel { width: 420px; min-width: 420px; background: var(--surface); overflow-y: auto; border-right: 1px solid var(--border); display: flex; flex-direction: column; }
 
         /* ATS STRIP */
-        .ats-strip {
-            padding: 0.8rem 1.2rem;
-            border-bottom: 1px solid var(--border);
-            background: var(--bg);
-        }
+        .ats-strip { padding: 0.8rem 1.2rem; border-bottom: 1px solid var(--border); background: var(--bg); flex-shrink: 0; }
         .ats-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
-        .ats-score-text { font-size: 0.85rem; font-weight: 600; }
-        .ats-score-text span { color: var(--primary); font-size: 1.1rem; }
+        .ats-score-text { font-size: 0.85rem; font-weight: 700; }
+        .ats-score-num { color: var(--primary); font-size: 1.2rem; }
         .roast-btn { background: var(--danger); color: white; border: none; padding: 4px 12px; border-radius: 20px; cursor: pointer; font-size: 0.75rem; font-weight: 600; font-family: 'Geist', sans-serif; transition: all 0.2s; }
         .roast-btn:hover { opacity: 0.85; transform: scale(1.02); }
-        .ats-bar-bg { background: var(--border); border-radius: 10px; height: 6px; overflow: hidden; }
+        .ats-bar-bg { background: var(--border); border-radius: 10px; height: 6px; overflow: hidden; margin-bottom: 6px; }
         .ats-bar-fill { height: 6px; border-radius: 10px; transition: width 0.5s ease, background 0.3s; width: 0%; background: var(--danger); }
-        .ats-feedback { font-size: 0.75rem; color: var(--muted); margin-top: 5px; }
+        .ats-feedback { font-size: 0.75rem; color: var(--muted); line-height: 1.6; }
 
         /* FORM TABS */
-        .form-tabs {
-            display: flex;
-            background: var(--bg);
-            border-bottom: 1px solid var(--border);
-            overflow-x: auto;
-            flex-shrink: 0;
-        }
-        .tab-btn {
-            flex: 1;
-            padding: 0.7rem 0.5rem;
-            border: none;
-            background: none;
-            color: var(--muted);
-            font-family: 'Geist', sans-serif;
-            font-size: 0.75rem;
-            font-weight: 500;
-            cursor: pointer;
-            border-bottom: 2px solid transparent;
-            transition: all 0.2s;
-            white-space: nowrap;
-        }
+        .form-tabs { display: flex; background: var(--bg); border-bottom: 1px solid var(--border); overflow-x: auto; flex-shrink: 0; }
+        .tab-btn { flex: 1; padding: 0.7rem 0.4rem; border: none; background: none; color: var(--muted); font-family: 'Geist', sans-serif; font-size: 0.72rem; font-weight: 500; cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.2s; white-space: nowrap; }
         .tab-btn.active { color: var(--primary); border-bottom-color: var(--primary); }
         .tab-btn:hover { color: var(--text); }
 
@@ -142,16 +107,10 @@
         .form-content { flex: 1; overflow-y: auto; padding: 1.2rem; }
         .tab-pane { display: none; }
         .tab-pane.active { display: block; }
-        .section-title { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--muted); margin: 1.2rem 0 0.8rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border); }
+        .section-label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--muted); margin: 1rem 0 0.8rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border); }
         .form-group { margin-bottom: 0.8rem; }
         .form-group label { display: block; font-size: 0.75rem; font-weight: 600; color: var(--muted); margin-bottom: 4px; }
-        .form-group input, .form-group textarea, .form-group select {
-            width: 100%; padding: 8px 12px;
-            border-radius: 10px; border: 1px solid var(--border);
-            background: var(--bg); color: var(--text);
-            font-family: 'Geist', sans-serif; font-size: 0.85rem;
-            outline: none; transition: border-color 0.2s;
-        }
+        .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 8px 12px; border-radius: 10px; border: 1px solid var(--border); background: var(--bg); color: var(--text); font-family: 'Geist', sans-serif; font-size: 0.85rem; outline: none; transition: border-color 0.2s; resize: vertical; }
         .form-group input:focus, .form-group textarea:focus { border-color: var(--primary); }
         .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; }
         .entry-card { background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 12px; padding: 0.8rem; margin-bottom: 0.8rem; }
@@ -164,188 +123,155 @@
         .optional-note { font-size: 0.78rem; color: var(--muted); margin-bottom: 0.8rem; font-style: italic; }
 
         /* PREVIEW PANEL */
-        .preview-panel {
-            flex: 1;
-            background: var(--bg);
-            overflow-y: auto;
-            padding: 2rem;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-        }
+        .preview-panel { flex: 1; background: var(--bg); overflow-y: auto; padding: 2rem; display: flex; justify-content: center; align-items: flex-start; }
 
         /* CV PAGE */
-        .cv-page {
-            width: 210mm;
-            min-height: 297mm;
-            background: white;
-            color: #111;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            border-radius: 4px;
-            overflow: hidden;
-        }
+        .cv-page { width: 210mm; min-height: 297mm; background: white; color: #111; box-shadow: 0 20px 60px rgba(0,0,0,0.3); border-radius: 4px; overflow: hidden; }
 
-        /* ===================== */
-        /* TEMPLATE 1 — FORGE   */
-        /* Clean two-column     */
-        /* ===================== */
+        /* TEMPLATE 1 — FORGE */
         .tpl-forge { display: grid; grid-template-columns: 200px 1fr; min-height: 297mm; }
         .tpl-forge .sidebar { background: #111827; padding: 28px 20px; color: white; }
-        .tpl-forge .sidebar .photo-wrap { text-align: center; margin-bottom: 20px; }
+        .tpl-forge .sidebar .photo-wrap { text-align: center; margin-bottom: 16px; }
         .tpl-forge .sidebar .photo { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 3px solid #F97316; }
-        .tpl-forge .sidebar .no-photo { width: 80px; height: 80px; border-radius: 50%; background: #1f2937; border: 3px solid #F97316; margin: 0 auto; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; color: #F97316; }
-        .tpl-forge .sidebar h1 { font-size: 14pt; font-weight: 700; color: white; text-align: center; margin-bottom: 4px; line-height: 1.2; }
-        .tpl-forge .sidebar .role { font-size: 8.5pt; color: #F97316; text-align: center; margin-bottom: 20px; font-weight: 500; }
-        .tpl-forge .sidebar .s-section { margin-bottom: 18px; }
-        .tpl-forge .sidebar .s-title { font-size: 7.5pt; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: #F97316; margin-bottom: 8px; padding-bottom: 4px; border-bottom: 1px solid #1f2937; }
-        .tpl-forge .sidebar .s-item { font-size: 8pt; color: #9ca3af; margin-bottom: 5px; word-break: break-all; }
-        .tpl-forge .sidebar .skill-pill { display: inline-block; background: #1f2937; color: #e5e7eb; padding: 2px 8px; border-radius: 20px; font-size: 7.5pt; margin: 2px; }
-        .tpl-forge .main { padding: 28px 24px; }
-        .tpl-forge .main .m-name { display: none; }
-        .tpl-forge .main .m-section { margin-bottom: 20px; }
-        .tpl-forge .main .m-title { font-size: 9pt; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: #111827; border-left: 3px solid #F97316; padding-left: 8px; margin-bottom: 10px; }
-        .tpl-forge .main .m-item { margin-bottom: 12px; }
-        .tpl-forge .main .m-item-title { font-size: 10pt; font-weight: 700; color: #111827; }
-        .tpl-forge .main .m-item-sub { font-size: 8.5pt; color: #6b7280; }
-        .tpl-forge .main .m-item-date { font-size: 8pt; color: #F97316; font-weight: 500; margin-bottom: 3px; }
+        .tpl-forge .sidebar .no-photo { width: 80px; height: 80px; border-radius: 50%; background: #1f2937; border: 3px solid #F97316; margin: 0 auto; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; }
+        .tpl-forge .sidebar h1 { font-size: 13pt; font-weight: 700; color: white; text-align: center; margin-bottom: 4px; line-height: 1.2; }
+        .tpl-forge .sidebar .s-role { font-size: 8pt; color: #F97316; text-align: center; margin-bottom: 18px; font-weight: 500; }
+        .tpl-forge .sidebar .s-section { margin-bottom: 16px; }
+        .tpl-forge .sidebar .s-title { font-size: 7pt; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: #F97316; margin-bottom: 7px; padding-bottom: 4px; border-bottom: 1px solid #1f2937; }
+        .tpl-forge .sidebar .s-item { font-size: 7.5pt; color: #9ca3af; margin-bottom: 4px; word-break: break-all; }
+        .tpl-forge .sidebar .skill-pill { display: inline-block; background: #1f2937; color: #e5e7eb; padding: 2px 7px; border-radius: 20px; font-size: 7pt; margin: 2px; }
+        .tpl-forge .main { padding: 26px 22px; }
+        .tpl-forge .main .m-section { margin-bottom: 18px; }
+        .tpl-forge .main .m-title { font-size: 8.5pt; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: #111827; border-left: 3px solid #F97316; padding-left: 8px; margin-bottom: 10px; }
+        .tpl-forge .main .m-item { margin-bottom: 10px; }
+        .tpl-forge .main .m-item-title { font-size: 9.5pt; font-weight: 700; color: #111827; }
+        .tpl-forge .main .m-item-sub { font-size: 8pt; color: #6b7280; }
+        .tpl-forge .main .m-item-date { font-size: 7.5pt; color: #F97316; font-weight: 500; margin-bottom: 2px; }
         .tpl-forge .main .m-item-desc { font-size: 8.5pt; color: #374151; line-height: 1.5; }
-        .tpl-forge .main summary-text { font-size: 9.5pt; color: #374151; line-height: 1.6; }
 
-        /* ===================== */
-        /* TEMPLATE 2 — FAANG   */
-        /* Single col minimal   */
-        /* ===================== */
-        .tpl-faang { padding: 40px 45px; font-family: 'Geist', sans-serif; }
-        .tpl-faang .f-header { border-bottom: 2px solid #111; padding-bottom: 16px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: flex-end; }
-        .tpl-faang .f-header-left { display: flex; align-items: center; gap: 16px; }
-        .tpl-faang .f-photo { width: 70px; height: 70px; border-radius: 8px; object-fit: cover; }
-        .tpl-faang .f-no-photo { width: 70px; height: 70px; border-radius: 8px; background: #f3f4f6; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: #9ca3af; }
-        .tpl-faang .f-name { font-size: 22pt; font-weight: 700; color: #111; letter-spacing: -0.5px; }
-        .tpl-faang .f-role { font-size: 11pt; color: #6b7280; margin-top: 2px; }
-        .tpl-faang .f-contact { text-align: right; font-size: 8.5pt; color: #6b7280; line-height: 1.8; }
-        .tpl-faang .f-section { margin-bottom: 18px; }
-        .tpl-faang .f-section-title { font-size: 9pt; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: #111; margin-bottom: 10px; }
+        /* TEMPLATE 2 — FAANG */
+        .tpl-faang { padding: 38px 44px; }
+        .tpl-faang .f-header { border-bottom: 2px solid #111; padding-bottom: 16px; margin-bottom: 18px; display: flex; justify-content: space-between; align-items: flex-end; }
+        .tpl-faang .f-header-left { display: flex; align-items: center; gap: 14px; }
+        .tpl-faang .f-photo { width: 68px; height: 68px; border-radius: 8px; object-fit: cover; }
+        .tpl-faang .f-no-photo { width: 68px; height: 68px; border-radius: 8px; background: #f3f4f6; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; color: #9ca3af; }
+        .tpl-faang .f-name { font-size: 21pt; font-weight: 700; color: #111; letter-spacing: -0.5px; }
+        .tpl-faang .f-role { font-size: 10pt; color: #6b7280; margin-top: 2px; }
+        .tpl-faang .f-contact { text-align: right; font-size: 8pt; color: #6b7280; line-height: 1.8; }
+        .tpl-faang .f-section { margin-bottom: 16px; }
+        .tpl-faang .f-section-title { font-size: 8.5pt; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: #111; margin-bottom: 10px; }
         .tpl-faang .f-item { margin-bottom: 10px; display: flex; justify-content: space-between; }
         .tpl-faang .f-item-left { flex: 1; }
-        .tpl-faang .f-item-title { font-size: 10pt; font-weight: 600; color: #111; }
-        .tpl-faang .f-item-sub { font-size: 8.5pt; color: #6b7280; }
-        .tpl-faang .f-item-date { font-size: 8pt; color: #6b7280; white-space: nowrap; padding-left: 10px; }
+        .tpl-faang .f-item-title { font-size: 9.5pt; font-weight: 600; color: #111; }
+        .tpl-faang .f-item-sub { font-size: 8pt; color: #6b7280; }
+        .tpl-faang .f-item-date { font-size: 7.5pt; color: #6b7280; white-space: nowrap; padding-left: 10px; }
         .tpl-faang .f-item-desc { font-size: 8.5pt; color: #374151; line-height: 1.5; margin-top: 3px; }
-        .tpl-faang .f-skills { display: flex; flex-wrap: wrap; gap: 6px; }
-        .tpl-faang .f-skill { background: #f3f4f6; color: #374151; padding: 3px 10px; border-radius: 4px; font-size: 8.5pt; font-weight: 500; }
-        .tpl-faang .f-divider { border: none; border-top: 1px solid #e5e7eb; margin-bottom: 16px; }
+        .tpl-faang .f-skills { display: flex; flex-wrap: wrap; gap: 5px; }
+        .tpl-faang .f-skill { background: #f3f4f6; color: #374151; padding: 3px 10px; border-radius: 4px; font-size: 8pt; font-weight: 500; }
+        .tpl-faang .f-divider { border: none; border-top: 1px solid #e5e7eb; margin-bottom: 14px; }
 
-        /* ===================== */
-        /* TEMPLATE 3 — ANVIL   */
-        /* Bold monospace        */
-        /* ===================== */
-        .tpl-anvil { font-family: 'Geist Mono', monospace; padding: 35px 40px; }
-        .tpl-anvil .a-header { margin-bottom: 24px; padding-bottom: 16px; border-bottom: 3px solid #111; display: flex; align-items: center; gap: 20px; }
-        .tpl-anvil .a-photo { width: 75px; height: 75px; border-radius: 4px; object-fit: cover; }
-        .tpl-anvil .a-no-photo { width: 75px; height: 75px; border-radius: 4px; background: #111; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: white; }
-        .tpl-anvil .a-name { font-size: 20pt; font-weight: 700; color: #111; letter-spacing: -1px; }
-        .tpl-anvil .a-role { font-size: 9pt; color: #6b7280; margin-top: 4px; }
-        .tpl-anvil .a-contact { font-size: 8pt; color: #9ca3af; margin-top: 6px; }
-        .tpl-anvil .a-body { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
-        .tpl-anvil .a-section { margin-bottom: 18px; }
-        .tpl-anvil .a-section-title { font-size: 7.5pt; font-weight: 700; text-transform: uppercase; letter-spacing: 3px; color: #9ca3af; margin-bottom: 10px; }
+        /* TEMPLATE 3 — ANVIL */
+        .tpl-anvil { font-family: 'Geist Mono', monospace; padding: 34px 38px; }
+        .tpl-anvil .a-header { margin-bottom: 22px; padding-bottom: 14px; border-bottom: 3px solid #111; display: flex; align-items: center; gap: 18px; }
+        .tpl-anvil .a-photo { width: 72px; height: 72px; border-radius: 4px; object-fit: cover; }
+        .tpl-anvil .a-no-photo { width: 72px; height: 72px; border-radius: 4px; background: #111; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; color: white; }
+        .tpl-anvil .a-name { font-size: 19pt; font-weight: 700; color: #111; letter-spacing: -1px; }
+        .tpl-anvil .a-role { font-size: 8.5pt; color: #6b7280; margin-top: 4px; }
+        .tpl-anvil .a-contact { font-size: 7.5pt; color: #9ca3af; margin-top: 5px; }
+        .tpl-anvil .a-body { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+        .tpl-anvil .a-section { margin-bottom: 16px; }
+        .tpl-anvil .a-section-title { font-size: 7pt; font-weight: 700; text-transform: uppercase; letter-spacing: 3px; color: #9ca3af; margin-bottom: 8px; }
         .tpl-anvil .a-item { margin-bottom: 10px; }
-        .tpl-anvil .a-item-title { font-size: 9.5pt; font-weight: 700; color: #111; }
-        .tpl-anvil .a-item-sub { font-size: 8pt; color: #6b7280; }
-        .tpl-anvil .a-item-desc { font-size: 8pt; color: #374151; line-height: 1.5; margin-top: 3px; }
-        .tpl-anvil .a-skill { display: inline-block; border: 1px solid #111; padding: 2px 8px; margin: 2px; font-size: 7.5pt; border-radius: 2px; }
+        .tpl-anvil .a-item-title { font-size: 9pt; font-weight: 700; color: #111; }
+        .tpl-anvil .a-item-sub { font-size: 7.5pt; color: #6b7280; }
+        .tpl-anvil .a-item-desc { font-size: 7.5pt; color: #374151; line-height: 1.5; margin-top: 3px; }
+        .tpl-anvil .a-skill { display: inline-block; border: 1px solid #111; padding: 2px 7px; margin: 2px; font-size: 7pt; border-radius: 2px; }
 
-        /* ===================== */
-        /* TEMPLATE 4 — SPARK   */
-        /* Colorful creative     */
-        /* ===================== */
+        /* TEMPLATE 4 — SPARK */
         .tpl-spark { font-family: 'Space Grotesk', sans-serif; }
-        .tpl-spark .sp-header { background: linear-gradient(135deg, #667eea, #764ba2); padding: 32px; color: white; display: flex; align-items: center; gap: 20px; }
-        .tpl-spark .sp-photo { width: 85px; height: 85px; border-radius: 50%; object-fit: cover; border: 3px solid rgba(255,255,255,0.4); }
-        .tpl-spark .sp-no-photo { width: 85px; height: 85px; border-radius: 50%; background: rgba(255,255,255,0.15); display: flex; align-items: center; justify-content: center; font-size: 2rem; border: 3px solid rgba(255,255,255,0.3); }
-        .tpl-spark .sp-name { font-size: 22pt; font-weight: 700; color: white; letter-spacing: -0.5px; }
-        .tpl-spark .sp-role { font-size: 10pt; color: rgba(255,255,255,0.8); margin-top: 4px; }
-        .tpl-spark .sp-contact { font-size: 8pt; color: rgba(255,255,255,0.7); margin-top: 8px; display: flex; flex-wrap: wrap; gap: 10px; }
-        .tpl-spark .sp-body { display: grid; grid-template-columns: 1fr 260px; }
-        .tpl-spark .sp-main { padding: 24px; }
-        .tpl-spark .sp-sidebar { background: #f8fafc; padding: 24px 18px; border-left: 1px solid #e5e7eb; }
-        .tpl-spark .sp-section { margin-bottom: 20px; }
-        .tpl-spark .sp-section-title { font-size: 9pt; font-weight: 700; color: #764ba2; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
-        .tpl-spark .sp-section-title::before { content: ''; display: block; width: 20px; height: 2px; background: #764ba2; }
-        .tpl-spark .sp-item { margin-bottom: 12px; }
-        .tpl-spark .sp-item-title { font-size: 10pt; font-weight: 600; color: #111; }
-        .tpl-spark .sp-item-sub { font-size: 8.5pt; color: #6b7280; }
-        .tpl-spark .sp-item-date { font-size: 8pt; color: #764ba2; font-weight: 500; }
+        .tpl-spark .sp-header { background: linear-gradient(135deg, #667eea, #764ba2); padding: 30px; color: white; display: flex; align-items: center; gap: 18px; }
+        .tpl-spark .sp-photo { width: 82px; height: 82px; border-radius: 50%; object-fit: cover; border: 3px solid rgba(255,255,255,0.4); }
+        .tpl-spark .sp-no-photo { width: 82px; height: 82px; border-radius: 50%; background: rgba(255,255,255,0.15); display: flex; align-items: center; justify-content: center; font-size: 1.8rem; border: 3px solid rgba(255,255,255,0.3); }
+        .tpl-spark .sp-name { font-size: 21pt; font-weight: 700; color: white; }
+        .tpl-spark .sp-role { font-size: 9.5pt; color: rgba(255,255,255,0.8); margin-top: 3px; }
+        .tpl-spark .sp-contact { font-size: 7.5pt; color: rgba(255,255,255,0.7); margin-top: 7px; display: flex; flex-wrap: wrap; gap: 8px; }
+        .tpl-spark .sp-body { display: grid; grid-template-columns: 1fr 240px; }
+        .tpl-spark .sp-main { padding: 22px; }
+        .tpl-spark .sp-sidebar { background: #f8fafc; padding: 22px 16px; border-left: 1px solid #e5e7eb; }
+        .tpl-spark .sp-section { margin-bottom: 18px; }
+        .tpl-spark .sp-section-title { font-size: 8.5pt; font-weight: 700; color: #764ba2; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
+        .tpl-spark .sp-section-title::before { content: ''; display: block; width: 18px; height: 2px; background: #764ba2; }
+        .tpl-spark .sp-item { margin-bottom: 11px; }
+        .tpl-spark .sp-item-title { font-size: 9.5pt; font-weight: 600; color: #111; }
+        .tpl-spark .sp-item-sub { font-size: 8pt; color: #6b7280; }
+        .tpl-spark .sp-item-date { font-size: 7.5pt; color: #764ba2; font-weight: 500; }
         .tpl-spark .sp-item-desc { font-size: 8.5pt; color: #374151; line-height: 1.5; margin-top: 3px; }
-        .tpl-spark .sp-skill-bar { margin-bottom: 8px; }
-        .tpl-spark .sp-skill-label { font-size: 8pt; font-weight: 600; color: #374151; margin-bottom: 3px; }
+        .tpl-spark .sp-skill-bar { margin-bottom: 7px; }
+        .tpl-spark .sp-skill-label { font-size: 7.5pt; font-weight: 600; color: #374151; margin-bottom: 3px; }
         .tpl-spark .sp-skill-bg { background: #e5e7eb; border-radius: 10px; height: 5px; }
         .tpl-spark .sp-skill-fill { background: linear-gradient(90deg, #667eea, #764ba2); height: 5px; border-radius: 10px; }
-        .tpl-spark .sp-tag { display: inline-block; background: rgba(118,75,162,0.1); color: #764ba2; padding: 2px 8px; border-radius: 20px; font-size: 7.5pt; margin: 2px; font-weight: 500; }
+        .tpl-spark .sp-tag { display: inline-block; background: rgba(118,75,162,0.1); color: #764ba2; padding: 2px 7px; border-radius: 20px; font-size: 7pt; margin: 2px; font-weight: 500; }
 
-        /* ===================== */
         /* TEMPLATE 5 — PHOENIX */
-        /* Executive split       */
-        /* ===================== */
         .tpl-phoenix { font-family: 'Playfair Display', serif; }
-        .tpl-phoenix .ph-header { padding: 36px 40px 24px; border-bottom: 1px solid #e5e7eb; display: flex; justify-content: space-between; align-items: flex-end; }
-        .tpl-phoenix .ph-left { display: flex; align-items: center; gap: 18px; }
-        .tpl-phoenix .ph-photo { width: 75px; height: 75px; border-radius: 50%; object-fit: cover; }
-        .tpl-phoenix .ph-no-photo { width: 75px; height: 75px; border-radius: 50%; background: #f9fafb; border: 2px solid #d1d5db; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: #9ca3af; }
-        .tpl-phoenix .ph-name { font-size: 24pt; font-weight: 700; color: #111; letter-spacing: -0.5px; }
-        .tpl-phoenix .ph-role { font-size: 10pt; color: #B45309; margin-top: 4px; font-family: 'Geist', sans-serif; font-weight: 500; }
-        .tpl-phoenix .ph-contact { text-align: right; font-size: 8.5pt; color: #6b7280; font-family: 'Geist', sans-serif; line-height: 1.8; }
-        .tpl-phoenix .ph-body { display: grid; grid-template-columns: 1fr 240px; gap: 0; }
-        .tpl-phoenix .ph-main { padding: 24px 28px; border-right: 1px solid #e5e7eb; }
-        .tpl-phoenix .ph-sidebar { padding: 24px 20px; background: #fffbf5; }
-        .tpl-phoenix .ph-section { margin-bottom: 22px; }
-        .tpl-phoenix .ph-section-title { font-size: 10pt; font-weight: 700; color: #111; margin-bottom: 12px; padding-bottom: 4px; border-bottom: 2px solid #B45309; display: flex; align-items: center; gap: 6px; }
-        .tpl-phoenix .ph-item { margin-bottom: 12px; }
-        .tpl-phoenix .ph-item-title { font-size: 10pt; font-weight: 700; color: #111; font-family: 'Geist', sans-serif; }
-        .tpl-phoenix .ph-item-sub { font-size: 8.5pt; color: #6b7280; font-family: 'Geist', sans-serif; }
-        .tpl-phoenix .ph-item-date { font-size: 8pt; color: #B45309; font-family: 'Geist', sans-serif; font-weight: 500; }
+        .tpl-phoenix .ph-header { padding: 34px 38px 22px; border-bottom: 1px solid #e5e7eb; display: flex; justify-content: space-between; align-items: flex-end; }
+        .tpl-phoenix .ph-left { display: flex; align-items: center; gap: 16px; }
+        .tpl-phoenix .ph-photo { width: 72px; height: 72px; border-radius: 50%; object-fit: cover; }
+        .tpl-phoenix .ph-no-photo { width: 72px; height: 72px; border-radius: 50%; background: #f9fafb; border: 2px solid #d1d5db; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; color: #9ca3af; }
+        .tpl-phoenix .ph-name { font-size: 22pt; font-weight: 700; color: #111; letter-spacing: -0.5px; }
+        .tpl-phoenix .ph-role { font-size: 9.5pt; color: #B45309; margin-top: 3px; font-family: 'Geist', sans-serif; font-weight: 500; }
+        .tpl-phoenix .ph-contact { text-align: right; font-size: 8pt; color: #6b7280; font-family: 'Geist', sans-serif; line-height: 1.8; }
+        .tpl-phoenix .ph-body { display: grid; grid-template-columns: 1fr 220px; }
+        .tpl-phoenix .ph-main { padding: 22px 26px; border-right: 1px solid #e5e7eb; }
+        .tpl-phoenix .ph-sidebar { padding: 22px 18px; background: #fffbf5; }
+        .tpl-phoenix .ph-section { margin-bottom: 20px; }
+        .tpl-phoenix .ph-section-title { font-size: 9.5pt; font-weight: 700; color: #111; margin-bottom: 10px; padding-bottom: 4px; border-bottom: 2px solid #B45309; }
+        .tpl-phoenix .ph-item { margin-bottom: 11px; }
+        .tpl-phoenix .ph-item-title { font-size: 9.5pt; font-weight: 700; color: #111; font-family: 'Geist', sans-serif; }
+        .tpl-phoenix .ph-item-sub { font-size: 8pt; color: #6b7280; font-family: 'Geist', sans-serif; }
+        .tpl-phoenix .ph-item-date { font-size: 7.5pt; color: #B45309; font-family: 'Geist', sans-serif; font-weight: 500; }
         .tpl-phoenix .ph-item-desc { font-size: 8.5pt; color: #374151; line-height: 1.5; margin-top: 3px; font-family: 'Geist', sans-serif; }
-        .tpl-phoenix .ph-skill { display: inline-block; border: 1px solid #B45309; color: #B45309; padding: 2px 10px; border-radius: 3px; font-size: 8pt; margin: 2px; font-family: 'Geist', sans-serif; }
+        .tpl-phoenix .ph-skill { display: inline-block; border: 1px solid #B45309; color: #B45309; padding: 2px 9px; border-radius: 3px; font-size: 7.5pt; margin: 2px; font-family: 'Geist', sans-serif; }
 
         /* ROAST POPUP */
-        .roast-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 9999; display: none; justify-content: center; align-items: center; backdrop-filter: blur(4px); }
+        .roast-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.75); z-index: 9999; display: none; justify-content: center; align-items: center; backdrop-filter: blur(4px); }
         .roast-overlay.show { display: flex; }
         .roast-popup { background: #111115; border: 1px solid #2a2a2e; border-radius: 20px; padding: 2rem; width: 500px; max-width: 90vw; max-height: 80vh; overflow-y: auto; }
-        .roast-popup h2 { font-size: 1.3rem; margin-bottom: 0.5rem; }
-        .roast-popup .roast-sub { color: var(--muted); font-size: 0.85rem; margin-bottom: 1.5rem; }
+        .roast-popup h2 { font-size: 1.3rem; margin-bottom: 0.4rem; }
+        .roast-sub { color: var(--muted); font-size: 0.85rem; margin-bottom: 1.5rem; }
         .roast-issue { background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.2); border-radius: 10px; padding: 0.8rem 1rem; margin-bottom: 0.8rem; font-size: 0.88rem; line-height: 1.5; }
         .roast-good { background: rgba(34,197,94,0.08); border: 1px solid rgba(34,197,94,0.2); border-radius: 10px; padding: 0.8rem 1rem; font-size: 0.88rem; }
-        .roast-close { width: 100%; padding: 0.7rem; background: var(--primary); color: white; border: none; border-radius: 10px; cursor: pointer; font-family: 'Geist', sans-serif; font-weight: 600; margin-top: 1rem; }
+        .roast-close { width: 100%; padding: 0.7rem; background: var(--primary); color: white; border: none; border-radius: 10px; cursor: pointer; font-family: 'Geist', sans-serif; font-weight: 600; margin-top: 1rem; font-size: 0.9rem; }
 
         /* CUSTOMIZATION DRAWER */
         .drawer-fab { position: fixed; bottom: 24px; right: 24px; width: 50px; height: 50px; border-radius: 50%; background: var(--primary); color: white; border: none; font-size: 1.1rem; cursor: pointer; box-shadow: 0 4px 20px rgba(249,115,22,0.4); z-index: 500; transition: transform 0.2s; }
         .drawer-fab:hover { transform: scale(1.1) rotate(15deg); }
-        .custom-drawer { position: fixed; right: -310px; top: 0; width: 300px; height: 100vh; background: var(--surface); border-left: 1px solid var(--border); z-index: 499; overflow-y: auto; padding: 1.5rem; transition: right 0.3s cubic-bezier(0.4,0,0.2,1); padding-bottom: 100px; }
+        .custom-drawer { position: fixed; right: -310px; top: 0; width: 300px; height: 100vh; background: var(--surface); border-left: 1px solid var(--border); z-index: 499; overflow-y: auto; padding: 1.5rem 1.5rem 100px; transition: right 0.3s cubic-bezier(0.4,0,0.2,1); }
         .custom-drawer.open { right: 0; }
         .drawer-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
         .drawer-header h3 { font-size: 1rem; font-weight: 700; }
         .drawer-reset { background: none; border: 1px solid var(--border); color: var(--muted); padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; cursor: pointer; font-family: 'Geist', sans-serif; }
         .drawer-section { margin-bottom: 1.5rem; }
-        .drawer-section label { display: block; font-size: 0.78rem; font-weight: 600; color: var(--muted); margin-bottom: 6px; }
+        .drawer-section > label { display: block; font-size: 0.78rem; font-weight: 600; color: var(--muted); margin-bottom: 6px; }
         .drawer-section input[type="color"] { width: 100%; height: 36px; border: 1px solid var(--border); border-radius: 8px; cursor: pointer; background: none; }
-        .drawer-section select, .drawer-section input[type="range"] { width: 100%; padding: 6px 10px; border: 1px solid var(--border); border-radius: 8px; background: var(--bg); color: var(--text); font-family: 'Geist', sans-serif; font-size: 0.82rem; }
-        .drawer-section input[type="range"] { padding: 0; accent-color: var(--primary); }
-        .toggle-row { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; font-size: 0.82rem; }
-        .toggle-row input[type="checkbox"] { accent-color: var(--primary); width: 14px; height: 14px; }
+        .drawer-section select { width: 100%; padding: 6px 10px; border: 1px solid var(--border); border-radius: 8px; background: var(--bg); color: var(--text); font-family: 'Geist', sans-serif; font-size: 0.82rem; }
+        .drawer-section input[type="range"] { width: 100%; accent-color: var(--primary); }
+        .toggle-row { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; font-size: 0.82rem; cursor: pointer; }
+        .toggle-row input[type="checkbox"] { accent-color: var(--primary); width: 14px; height: 14px; cursor: pointer; }
         .drawer-danger { width: 100%; padding: 0.6rem; background: rgba(239,68,68,0.1); color: var(--danger); border: 1px solid rgba(239,68,68,0.3); border-radius: 8px; cursor: pointer; font-family: 'Geist', sans-serif; font-size: 0.82rem; margin-top: 0.5rem; }
 
         /* TOAST */
-        .toast { position: fixed; bottom: 85px; right: 24px; background: #111827; color: #F97316; padding: 10px 20px; border-radius: 20px; font-size: 0.82rem; font-weight: 600; z-index: 9998; opacity: 0; transform: translateY(8px); transition: all 0.25s; pointer-events: none; }
+        .toast { position: fixed; bottom: 85px; right: 24px; background: #111827; color: #F97316; padding: 10px 20px; border-radius: 20px; font-size: 0.82rem; font-weight: 600; z-index: 9998; opacity: 0; transform: translateY(8px); transition: all 0.25s; pointer-events: none; max-width: 280px; }
         .toast.show { opacity: 1; transform: translateY(0); }
 
         /* PRINT */
         @media print {
             .top-bar, .template-bar, .form-panel, .ats-strip,
-            .drawer-fab, .custom-drawer, .roast-overlay, .toast { display: none !important; }
+            .drawer-fab, .custom-drawer, .roast-overlay, .toast, .dot-menu { display: none !important; }
             body { height: auto; overflow: visible; }
             .builder { display: block; height: auto; }
             .preview-panel { padding: 0; overflow: visible; }
-            .cv-page { box-shadow: none; border-radius: 0; width: 100%; }
+            .cv-page { box-shadow: none; border-radius: 0; width: 100%; min-height: auto; }
         }
     </style>
 </head>
@@ -356,8 +282,20 @@
     <a href="index.html" class="logo">forge<span>.cv</span></a>
     <div class="top-actions">
         <button class="icon-btn" id="modeToggle" title="Toggle theme"><i class="fas fa-moon"></i></button>
-        <button class="btn-back" onclick="window.location.href='index.html'"><i class="fas fa-arrow-left"></i> Back</button>
-        <button class="btn-download" id="downloadBtn"><i class="fas fa-download"></i> Download PDF</button>
+        <button class="btn-back" onclick="window.location.href='index.html'">
+            <i class="fas fa-arrow-left"></i> Back
+        </button>
+        <button class="btn-download" id="downloadBtn" disabled>
+            <i class="fas fa-download"></i> Download PDF
+        </button>
+        <button class="icon-btn" id="menuBtn" title="More options">
+            <i class="fas fa-ellipsis-h"></i>
+        </button>
+        <div class="dot-menu" id="dotMenu">
+            <button class="dot-menu-item" onclick="saveToFile()">💾 Save to file</button>
+            <button class="dot-menu-item" onclick="loadFromFile()">📂 Load from file</button>
+            <button class="dot-menu-item danger" onclick="clearAll()">🗑️ Clear all data</button>
+        </div>
     </div>
 </div>
 
@@ -379,11 +317,11 @@
         <!-- ATS STRIP -->
         <div class="ats-strip">
             <div class="ats-top">
-                <div class="ats-score-text">ATS Score: <span id="atsScore">0</span>%</div>
+                <div class="ats-score-text">ATS Score: <span class="ats-score-num" id="atsScore">--</span></div>
                 <button class="roast-btn" id="roastBtn">🔥 Roast Me</button>
             </div>
             <div class="ats-bar-bg"><div class="ats-bar-fill" id="atsBar"></div></div>
-            <div class="ats-feedback" id="atsFeedback">Paste a job description to get your ATS score</div>
+            <div class="ats-feedback" id="atsFeedback">Paste a job description to calculate your ATS score</div>
         </div>
 
         <!-- TABS -->
@@ -399,20 +337,20 @@
         <!-- FORM CONTENT -->
         <div class="form-content">
 
-            <!-- TARGET TAB -->
+            <!-- TARGET -->
             <div class="tab-pane active" id="tab-target">
-                <div class="section-title">Job Target (for ATS)</div>
+                <div class="section-label">Job Target</div>
                 <div class="form-group">
                     <label>Paste job description</label>
-                    <textarea id="jobDescription" rows="6" placeholder="Paste the full job posting here. Forge will extract keywords and calculate your ATS match score..."></textarea>
+                    <textarea id="jobDescription" rows="7" placeholder="Paste the full job posting here. Forge extracts keywords and calculates your ATS match score in real time..."></textarea>
                 </div>
             </div>
 
-            <!-- PERSONAL TAB -->
+            <!-- PERSONAL -->
             <div class="tab-pane" id="tab-personal">
-                <div class="section-title">Personal Info</div>
+                <div class="section-label">Personal Info</div>
                 <div class="form-group">
-                    <label>Full Name</label>
+                    <label>Full Name *</label>
                     <input id="fullName" placeholder="e.g. Ummul Baneen">
                 </div>
                 <div class="form-group">
@@ -422,7 +360,7 @@
                 <div class="form-row">
                     <div class="form-group">
                         <label>Email</label>
-                        <input id="email" placeholder="your@email.com">
+                        <input id="email" type="email" placeholder="your@email.com">
                     </div>
                     <div class="form-group">
                         <label>Phone</label>
@@ -450,28 +388,28 @@
                 </div>
             </div>
 
-            <!-- EDUCATION TAB -->
+            <!-- EDUCATION -->
             <div class="tab-pane" id="tab-education">
-                <div class="section-title">Education</div>
+                <div class="section-label">Education</div>
                 <div id="eduContainer"></div>
                 <button class="add-btn" id="addEduBtn">+ Add Education</button>
             </div>
 
-            <!-- EXPERIENCE TAB -->
+            <!-- EXPERIENCE -->
             <div class="tab-pane" id="tab-experience">
-                <div class="section-title">Experience</div>
+                <div class="section-label">Experience</div>
                 <p class="optional-note">Optional — skip if you have none 😊</p>
                 <div id="expContainer"></div>
                 <button class="add-btn" id="addExpBtn">+ Add Experience</button>
             </div>
 
-            <!-- SKILLS TAB -->
+            <!-- SKILLS -->
             <div class="tab-pane" id="tab-skills">
-                <div class="section-title">Skills</div>
+                <div class="section-label">Skills</div>
                 <div class="form-group">
                     <label>Technical Skills</label>
                     <input id="techSkills" placeholder="Python, JavaScript, React, SQL...">
-                    <small style="color:var(--muted);font-size:0.75rem">Separate with commas</small>
+                    <small style="color:var(--muted);font-size:0.73rem;margin-top:3px;display:block">Separate with commas</small>
                 </div>
                 <div class="form-group">
                     <label>Soft Skills</label>
@@ -484,9 +422,9 @@
                 <button class="ai-btn" onclick="suggestSkills()"><i class="fas fa-magic"></i> AI Suggest Skills</button>
             </div>
 
-            <!-- EXTRAS TAB -->
+            <!-- EXTRAS -->
             <div class="tab-pane" id="tab-extras">
-                <div class="section-title">Extra Sections</div>
+                <div class="section-label">Extra Sections</div>
                 <div class="form-group">
                     <label>Projects</label>
                     <textarea id="projects" rows="3" placeholder="Notable projects..."></textarea>
@@ -526,19 +464,19 @@
 </div>
 
 <!-- CUSTOMIZATION DRAWER -->
-<button class="drawer-fab" id="drawerFab" onclick="toggleDrawer()"><i class="fas fa-palette"></i></button>
+<button class="drawer-fab" id="drawerFab" onclick="toggleDrawer()">
+    <i class="fas fa-palette"></i>
+</button>
 
 <div class="custom-drawer" id="customDrawer">
     <div class="drawer-header">
         <h3>🎨 Customize</h3>
         <button class="drawer-reset" onclick="resetCustom()">Reset</button>
     </div>
-
     <div class="drawer-section">
         <label>Accent Color</label>
         <input type="color" id="colorPicker" value="#F97316" oninput="updateColor(this.value)">
     </div>
-
     <div class="drawer-section">
         <label>Font Style</label>
         <select id="fontSelect" onchange="updateFont(this.value)">
@@ -549,12 +487,10 @@
             <option value="Geist Mono">Geist Mono (Tech)</option>
         </select>
     </div>
-
     <div class="drawer-section">
         <label>Font Size — <span id="fontSizeVal">11</span>pt</label>
         <input type="range" id="fontSizeSlider" min="8" max="14" value="11" oninput="updateFontSize(this.value)">
     </div>
-
     <div class="drawer-section">
         <label>Profile Photo</label>
         <input type="file" accept="image/*" onchange="handlePhoto(this)" style="font-size:0.8rem;color:var(--muted)">
@@ -563,7 +499,6 @@
             <label for="showPhoto">Show photo on CV</label>
         </div>
     </div>
-
     <div class="drawer-section">
         <label>Show / Hide Sections</label>
         <div class="toggle-row"><input type="checkbox" id="sec-summary" checked onchange="toggleSection('summary',this.checked)"><label>Summary</label></div>
@@ -576,7 +511,6 @@
         <div class="toggle-row"><input type="checkbox" id="sec-awards" checked onchange="toggleSection('awards',this.checked)"><label>Awards</label></div>
         <div class="toggle-row"><input type="checkbox" id="sec-volunteer" checked onchange="toggleSection('volunteer',this.checked)"><label>Volunteer</label></div>
     </div>
-
     <button class="drawer-danger" onclick="clearAll()">🗑️ Clear All & Start Fresh</button>
 </div>
 
@@ -584,7 +518,7 @@
 <div class="toast" id="toast"></div>
 
 <script>
-// ============ STATE ============
+// ========== STATE ==========
 let currentTemplate = localStorage.getItem('forge_template') || 'forge';
 let profilePhoto = localStorage.getItem('forge_photo') || '';
 let custom = JSON.parse(localStorage.getItem('forge_custom')) || {
@@ -597,38 +531,38 @@ let formData = {
     jobDescription:'', educations:[], experiences:[]
 };
 
-// ============ INIT ============
+// ========== INIT ==========
 window.onload = () => {
     loadData();
-    renderForm();
+    renderEduCards();
+    renderExpCards();
+    fillTextFields();
     initTabs();
     initTemplates();
     initTheme();
+    initMenu();
     applyCustom();
     updateAll();
 };
 
-// ============ SAVE / LOAD ============
+// ========== SAVE / LOAD ==========
 function saveData() {
-    const fields = ['fullName','jobTitle','email','phone','location','linkedin','github','summary','techSkills','softSkills','languages','projects','certifications','awards','volunteer','jobDescription'];
-    fields.forEach(id => { const el = document.getElementById(id); if(el) formData[id] = el.value; });
     localStorage.setItem('forge_data', JSON.stringify(formData));
     localStorage.setItem('forge_template', currentTemplate);
 }
 
 function loadData() {
     const saved = localStorage.getItem('forge_data');
-    if(saved) formData = { ...formData, ...JSON.parse(saved) };
+    if (saved) {
+        try { formData = { ...formData, ...JSON.parse(saved) }; } catch(e) {}
+    }
 }
 
-// ============ FORM RENDERING ============
-function renderForm() {
-    renderEduCards();
-    renderExpCards();
+function fillTextFields() {
     const fields = ['fullName','jobTitle','email','phone','location','linkedin','github','summary','techSkills','softSkills','languages','projects','certifications','awards','volunteer','jobDescription'];
     fields.forEach(id => {
         const el = document.getElementById(id);
-        if(el && formData[id]) el.value = formData[id];
+        if (el && formData[id]) el.value = formData[id];
     });
     attachInputListeners();
 }
@@ -637,59 +571,66 @@ function attachInputListeners() {
     const fields = ['fullName','jobTitle','email','phone','location','linkedin','github','summary','techSkills','softSkills','languages','projects','certifications','awards','volunteer'];
     fields.forEach(id => {
         const el = document.getElementById(id);
-        if(el) el.oninput = () => { formData[id] = el.value; updateAll(); saveData(); };
+        if (el) el.oninput = () => { formData[id] = el.value; updateAll(); saveData(); };
     });
     const jd = document.getElementById('jobDescription');
-    if(jd) { jd.value = formData.jobDescription || ''; jd.oninput = () => { formData.jobDescription = jd.value; updateATS(); saveData(); }; }
-    document.getElementById('addEduBtn')?.addEventListener('click', () => { formData.educations.push({degree:'',school:'',start:'',end:'',gpa:''}); renderEduCards(); updateAll(); saveData(); });
-    document.getElementById('addExpBtn')?.addEventListener('click', () => { formData.experiences.push({title:'',company:'',start:'',end:'',desc:''}); renderExpCards(); updateAll(); saveData(); });
+    if (jd) jd.oninput = () => { formData.jobDescription = jd.value; updateATS(); saveData(); };
+    document.getElementById('addEduBtn')?.addEventListener('click', () => {
+        formData.educations.push({ degree:'', school:'', start:'', end:'', gpa:'' });
+        renderEduCards(); updateAll(); saveData();
+    });
+    document.getElementById('addExpBtn')?.addEventListener('click', () => {
+        formData.experiences.push({ title:'', company:'', start:'', end:'', desc:'' });
+        renderExpCards(); updateAll(); saveData();
+    });
 }
 
+// ========== EDU / EXP CARDS ==========
 function renderEduCards() {
     const c = document.getElementById('eduContainer');
-    if(!c) return;
+    if (!c) return;
     c.innerHTML = '';
     formData.educations.forEach((edu, i) => {
         const d = document.createElement('div');
         d.className = 'entry-card';
         d.innerHTML = `
             <div class="entry-card-header"><span>Education ${i+1}</span><button class="remove-btn" onclick="removeEdu(${i})">✕ Remove</button></div>
-            <div class="form-group"><label>Degree</label><input class="edu-f" data-idx="${i}" data-key="degree" placeholder="BS Computer Science" value="${esc(edu.degree)}"></div>
-            <div class="form-group"><label>School</label><input class="edu-f" data-idx="${i}" data-key="school" placeholder="University of Haripur" value="${esc(edu.school)}"></div>
+            <div class="form-group"><label>Degree</label><input class="edu-f" data-i="${i}" data-k="degree" placeholder="BS Computer Science" value="${esc(edu.degree)}"></div>
+            <div class="form-group"><label>School</label><input class="edu-f" data-i="${i}" data-k="school" placeholder="University of Haripur" value="${esc(edu.school)}"></div>
             <div class="form-row">
-                <div class="form-group"><label>Start</label><input class="edu-f" data-idx="${i}" data-key="start" placeholder="2022" value="${esc(edu.start)}"></div>
-                <div class="form-group"><label>End</label><input class="edu-f" data-idx="${i}" data-key="end" placeholder="2026" value="${esc(edu.end)}"></div>
+                <div class="form-group"><label>Start</label><input class="edu-f" data-i="${i}" data-k="start" placeholder="2022" value="${esc(edu.start)}"></div>
+                <div class="form-group"><label>End</label><input class="edu-f" data-i="${i}" data-k="end" placeholder="2026" value="${esc(edu.end)}"></div>
             </div>
-            <div class="form-group"><label>GPA / Grade</label><input class="edu-f" data-idx="${i}" data-key="gpa" placeholder="3.5/4.0 or 86%" value="${esc(edu.gpa)}"></div>
+            <div class="form-group"><label>GPA / Grade</label><input class="edu-f" data-i="${i}" data-k="gpa" placeholder="3.5/4.0 or 86%" value="${esc(edu.gpa)}"></div>
         `;
         c.appendChild(d);
     });
-    document.querySelectorAll('.edu-f').forEach(el => {
-        el.oninput = () => { formData.educations[el.dataset.idx][el.dataset.key] = el.value; updateAll(); saveData(); };
+    c.querySelectorAll('.edu-f').forEach(el => {
+        el.oninput = () => { formData.educations[el.dataset.i][el.dataset.k] = el.value; updateAll(); saveData(); };
     });
 }
 
 function renderExpCards() {
     const c = document.getElementById('expContainer');
-    if(!c) return;
+    if (!c) return;
     c.innerHTML = '';
     formData.experiences.forEach((exp, i) => {
         const d = document.createElement('div');
         d.className = 'entry-card';
         d.innerHTML = `
             <div class="entry-card-header"><span>Experience ${i+1}</span><button class="remove-btn" onclick="removeExp(${i})">✕ Remove</button></div>
-            <div class="form-group"><label>Job Title</label><input class="exp-f" data-idx="${i}" data-key="title" placeholder="Software Engineer Intern" value="${esc(exp.title)}"></div>
-            <div class="form-group"><label>Company</label><input class="exp-f" data-idx="${i}" data-key="company" placeholder="Company Name" value="${esc(exp.company)}"></div>
+            <div class="form-group"><label>Job Title</label><input class="exp-f" data-i="${i}" data-k="title" placeholder="Software Engineer Intern" value="${esc(exp.title)}"></div>
+            <div class="form-group"><label>Company</label><input class="exp-f" data-i="${i}" data-k="company" placeholder="Company Name" value="${esc(exp.company)}"></div>
             <div class="form-row">
-                <div class="form-group"><label>Start</label><input class="exp-f" data-idx="${i}" data-key="start" placeholder="Jan 2024" value="${esc(exp.start)}"></div>
-                <div class="form-group"><label>End</label><input class="exp-f" data-idx="${i}" data-key="end" placeholder="Jun 2024" value="${esc(exp.end)}"></div>
+                <div class="form-group"><label>Start</label><input class="exp-f" data-i="${i}" data-k="start" placeholder="Jan 2024" value="${esc(exp.start)}"></div>
+                <div class="form-group"><label>End</label><input class="exp-f" data-i="${i}" data-k="end" placeholder="Jun 2024" value="${esc(exp.end)}"></div>
             </div>
-            <div class="form-group"><label>Description</label><textarea class="exp-f" data-idx="${i}" data-key="desc" rows="3" placeholder="What did you do?">${esc(exp.desc)}</textarea></div>
+            <div class="form-group"><label>Description</label><textarea class="exp-f" data-i="${i}" data-k="desc" rows="3" placeholder="What did you do? Add numbers and results!">${esc(exp.desc)}</textarea></div>
         `;
         c.appendChild(d);
     });
-    document.querySelectorAll('.exp-f').forEach(el => {
-        el.oninput = () => { formData.experiences[el.dataset.idx][el.dataset.key] = el.value; updateAll(); saveData(); };
+    c.querySelectorAll('.exp-f').forEach(el => {
+        el.oninput = () => { formData.experiences[el.dataset.i][el.dataset.k] = el.value; updateAll(); saveData(); };
     });
 }
 
@@ -697,7 +638,7 @@ function removeEdu(i) { formData.educations.splice(i,1); renderEduCards(); updat
 function removeExp(i) { formData.experiences.splice(i,1); renderExpCards(); updateAll(); saveData(); }
 function esc(s) { return (s||'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 
-// ============ TABS ============
+// ========== TABS ==========
 function initTabs() {
     document.querySelectorAll('.tab-btn').forEach(btn => {
         btn.onclick = () => {
@@ -709,7 +650,7 @@ function initTabs() {
     });
 }
 
-// ============ TEMPLATE SWITCHER ============
+// ========== TEMPLATES ==========
 function initTemplates() {
     const btns = document.querySelectorAll('.temp-btn');
     btns.forEach(btn => {
@@ -723,14 +664,14 @@ function initTemplates() {
         };
     });
     const active = Array.from(btns).find(b => b.dataset.temp === currentTemplate);
-    if(active) active.classList.add('active');
+    if (active) active.classList.add('active');
     else btns[0].classList.add('active');
 }
 
-// ============ THEME TOGGLE ============
+// ========== THEME ==========
 function initTheme() {
     const isLight = localStorage.getItem('forge_theme') === 'light';
-    if(isLight) document.body.classList.add('light');
+    if (isLight) document.body.classList.add('light');
     const btn = document.getElementById('modeToggle');
     btn.innerHTML = isLight ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
     btn.onclick = () => {
@@ -741,65 +682,131 @@ function initTheme() {
     };
 }
 
-// ============ ATS SCORE ============
+// ========== DOT MENU ==========
+function initMenu() {
+    const btn = document.getElementById('menuBtn');
+    const menu = document.getElementById('dotMenu');
+    btn.onclick = (e) => {
+        e.stopPropagation();
+        menu.classList.toggle('open');
+    };
+    document.addEventListener('click', (e) => {
+        if (!menu.contains(e.target) && e.target !== btn) {
+            menu.classList.remove('open');
+        }
+    });
+}
+
+// ========== ATS SCORE ==========
 function extractKeywords(text) {
-    const stopWords = new Set(['the','a','an','and','or','of','to','for','in','with','on','at','by','is','are','was','were','be','been','being','have','has','had','do','does','did','but','not','this','that','from','as','will','can','should','could','would','may','might','must','we','you','our','your','they','their','who','which','what','when','where','how','all','any','both','each','few','more','most','other','some','such','than','then','there','these','those','very','just','about','also','into','than','over','after','before','between','during','through','under','while']);
-    return [...new Set(text.toLowerCase().split(/\W+/).filter(w => w.length > 3 && !stopWords.has(w)))].slice(0, 40);
+    const stop = new Set(['with','from','that','this','your','have','will','they','their','about','which','what','when','where','into','over','after','before','between','through','under','while','there','these','those','very','just','also','both','each','more','most','other','some','such','than','then','been','being','were','does','did','doing','could','would','should','might','must','shall','even','well','only','same','here','still','back','down','since','once','upon','without','within','above','below','around','along','across','behind','during','every','another','because','however','therefore','although','whether','either','neither','often','never','always','sometimes']);
+    return [...new Set(
+        text.toLowerCase().split(/\W+/).filter(w => w.length > 3 && !stop.has(w) && isNaN(w))
+    )].slice(0, 50);
 }
 
 function updateATS() {
     const jd = formData.jobDescription || '';
-    if(!jd.trim()) { document.getElementById('atsScore').textContent = '0'; document.getElementById('atsBar').style.width = '0%'; document.getElementById('atsFeedback').textContent = 'Paste a job description to get your ATS score'; return; }
+    const resumeText = [
+        formData.techSkills, formData.softSkills, formData.summary,
+        ...formData.experiences.map(e => (e.desc||'') + ' ' + (e.title||'')),
+        ...formData.educations.map(e => e.degree||'')
+    ].join(' ').toLowerCase();
+
+    const hasJD = jd.trim().length > 10;
+    const hasResume = resumeText.trim().length > 20;
+
+    if (!hasJD) {
+        document.getElementById('atsScore').textContent = '--';
+        document.getElementById('atsBar').style.width = '0%';
+        document.getElementById('atsFeedback').innerHTML = 'Paste a job description to calculate your ATS score';
+        return;
+    }
+    if (!hasResume) {
+        document.getElementById('atsScore').textContent = '--';
+        document.getElementById('atsBar').style.width = '0%';
+        document.getElementById('atsFeedback').innerHTML = '📝 Fill in your experience and skills to see your score';
+        return;
+    }
+
     const keywords = extractKeywords(jd);
-    const combined = ((formData.techSkills||'') + ' ' + (formData.softSkills||'') + ' ' + (formData.summary||'')).toLowerCase();
-    const matched = keywords.filter(kw => combined.includes(kw));
+    const matched = keywords.filter(kw => resumeText.includes(kw));
+    const missing = keywords.filter(kw => !resumeText.includes(kw)).slice(0, 8);
     const score = keywords.length ? Math.min(100, Math.round((matched.length / keywords.length) * 100)) : 0;
-    const missing = keywords.filter(kw => !combined.includes(kw)).slice(0, 5);
+
     document.getElementById('atsScore').textContent = score;
     const bar = document.getElementById('atsBar');
     bar.style.width = score + '%';
     bar.style.background = score >= 70 ? '#22C55E' : score >= 40 ? '#F59E0B' : '#EF4444';
-    let feedback = '';
-    if(score < 30) feedback = `⚠️ Low match. Missing: ${missing.join(', ')}`;
-    else if(score < 70) feedback = `📈 Good start! Try adding: ${missing.join(', ')}`;
-    else feedback = '✅ Strong match! Ready to apply.';
-    document.getElementById('atsFeedback').textContent = feedback;
+
+    let html = `<span>${matched.length}/${keywords.length} keywords matched</span>`;
+    if (missing.length) {
+        html += `<div style="margin-top:5px;display:flex;flex-wrap:wrap;gap:4px;align-items:center">
+            <span style="font-size:0.7rem;color:var(--muted)">Missing:</span>`;
+        missing.forEach(kw => {
+            html += `<span onclick="addKeyword('${kw}')" style="background:rgba(239,68,68,0.15);color:#EF4444;padding:2px 8px;border-radius:20px;font-size:0.7rem;cursor:pointer;border:1px solid rgba(239,68,68,0.3)" title="Click to add to skills">${kw} +</span>`;
+        });
+        html += `</div>`;
+    } else if (score >= 70) {
+        html += `<div style="color:#22C55E;font-size:0.75rem;margin-top:4px">✅ Strong match! Ready to apply.</div>`;
+    }
+    document.getElementById('atsFeedback').innerHTML = html;
+    updateDownloadBtn();
 }
 
-// ============ ROAST MODE ============
+// ========== DOWNLOAD BTN ==========
+function updateDownloadBtn() {
+    const btn = document.getElementById('downloadBtn');
+    const hasName = (formData.fullName||'').trim().length > 0;
+    btn.disabled = !hasName;
+    btn.title = hasName ? '' : 'Add your name to enable download';
+}
+
+function addKeyword(kw) {
+    const el = document.getElementById('techSkills');
+    if (!el) return;
+    const current = (el.value||'').trim();
+    el.value = current ? current + ', ' + kw : kw;
+    formData.techSkills = el.value;
+    saveData(); updateAll();
+    showToast(`✅ "${kw}" added to skills!`);
+}
+
+// ========== ROAST MODE ==========
 function roastResume() {
-    const issues = [];
     const d = formData;
-    if(!d.summary || d.summary.length < 50) issues.push('❌ Your summary is too short or missing. Add specific achievements and what makes you unique.');
-    if(d.experiences.some(e => (e.desc||'').toLowerCase().includes('responsible for'))) issues.push('🤨 "Responsible for" is weak. Replace with action verbs like "Led", "Built", "Increased", "Reduced".');
-    if(d.experiences.some(e => (e.desc||'').toLowerCase().includes('helped'))) issues.push('⚡ "Helped" is passive. Quantify your impact — "Helped" → "Increased X by 30%".');
-    if(!d.techSkills || d.techSkills.length < 20) issues.push('📚 You need more skills listed. Recruiters scan for keywords — add at least 6-8 relevant skills.');
-    if(!d.jobDescription) issues.push('📋 No job description pasted. You\'re applying blind — paste the job posting to see your ATS score!');
-    if(d.experiences.every(e => !e.desc || e.desc.length < 30)) issues.push('📊 Your experience bullets lack detail. Add numbers and results: "Improved performance by 40%".');
-    if(!d.linkedin) issues.push('🔗 No LinkedIn added. Recruiters always check — add your profile.');
+    const issues = [];
+    if (!d.summary || d.summary.length < 50) issues.push('❌ Summary too short or missing. Add specific achievements and what makes you unique.');
+    if (d.experiences.some(e => (e.desc||'').toLowerCase().includes('responsible for'))) issues.push('🤨 "Responsible for" is weak. Use action verbs: "Led", "Built", "Increased", "Reduced".');
+    if (d.experiences.some(e => (e.desc||'').toLowerCase().includes('helped'))) issues.push('⚡ "Helped" is passive. Quantify impact — "Increased X by 30%".');
+    if (!d.techSkills || d.techSkills.split(',').filter(s=>s.trim()).length < 5) issues.push('📚 Add more skills. Recruiters scan for keywords — aim for at least 6-8 relevant skills.');
+    if (!d.jobDescription) issues.push('📋 No job description pasted. You\'re applying blind — paste the job posting to boost your ATS score!');
+    if (d.experiences.length > 0 && d.experiences.every(e => !e.desc || e.desc.length < 30)) issues.push('📊 Experience bullets lack detail. Add numbers: "Improved performance by 40%".');
+    if (!d.linkedin) issues.push('🔗 No LinkedIn added. Recruiters always check — add your profile URL.');
+    if (!d.fullName) issues.push('👤 No name added. Please fill in your name!');
+
     const content = document.getElementById('roastContent');
-    if(issues.length === 0) {
-        content.innerHTML = '<div class="roast-good">🔥 Surprisingly solid resume! Add numbers and results everywhere, then go apply with confidence.</div>';
-    } else {
-        content.innerHTML = issues.map(i => `<div class="roast-issue">${i}</div>`).join('');
-    }
+    content.innerHTML = issues.length
+        ? issues.map(i => `<div class="roast-issue">${i}</div>`).join('')
+        : `<div class="roast-good">🔥 Surprisingly solid! Add numbers and results everywhere, then go apply with confidence.</div>`;
     document.getElementById('roastOverlay').classList.add('show');
 }
 
 function closeRoast() { document.getElementById('roastOverlay').classList.remove('show'); }
-document.getElementById('roastBtn').onclick = roastResume;
-document.getElementById('roastOverlay').onclick = (e) => { if(e.target === e.currentTarget) closeRoast(); };
 
-// ============ PREVIEW ============
+document.getElementById('roastBtn').onclick = roastResume;
+document.getElementById('roastOverlay').onclick = (e) => { if (e.target === e.currentTarget) closeRoast(); };
+
+// ========== PREVIEW ==========
 function skillTags(str, cls) {
-    if(!str) return '';
-    return str.split(',').map(s => s.trim()).filter(s => s).map(s => `<span class="${cls}">${s}</span>`).join('');
+    if (!str) return '';
+    return str.split(',').map(s=>s.trim()).filter(s=>s).map(s=>`<span class="${cls}">${s}</span>`).join('');
 }
 
 function photoEl(cls, size=75) {
-    if(!custom.showPhoto) return '';
-    if(profilePhoto) return `<img src="${profilePhoto}" class="${cls}" style="width:${size}px;height:${size}px">`;
-    return `<div class="${cls}" style="width:${size}px;height:${size}px;font-size:${size*0.35}px">👤</div>`;
+    if (!custom.showPhoto) return '';
+    if (profilePhoto) return `<img src="${profilePhoto}" class="${cls}" style="width:${size}px;height:${size}px;object-fit:cover">`;
+    return `<div class="${cls}" style="width:${size}px;height:${size}px;font-size:${Math.round(size*0.35)}px">👤</div>`;
 }
 
 function show(sec) { return custom.sections[sec] !== false; }
@@ -811,13 +818,13 @@ function updatePreview() {
     const sz = custom.fontSize;
     let html = '';
 
-    if(currentTemplate === 'forge') {
+    if (currentTemplate === 'forge') {
         const skills = (d.techSkills||'').split(',').map(s=>s.trim()).filter(s=>s);
         html = `<div class="tpl-forge" style="font-family:'${f}',sans-serif;font-size:${sz}pt">
             <div class="sidebar" style="background:#111827">
                 <div class="photo-wrap">${photoEl('photo')}</div>
                 <h1>${d.fullName||'Your Name'}</h1>
-                <div class="role" style="color:${c}">${d.jobTitle||'Your Title'}</div>
+                <div class="s-role" style="color:${c}">${d.jobTitle||'Your Title'}</div>
                 <div class="s-section">
                     <div class="s-title" style="color:${c}">Contact</div>
                     ${d.email?`<div class="s-item">📧 ${d.email}</div>`:''}
@@ -826,25 +833,25 @@ function updatePreview() {
                     ${d.linkedin?`<div class="s-item">🔗 ${d.linkedin}</div>`:''}
                     ${d.github?`<div class="s-item">💻 ${d.github}</div>`:''}
                 </div>
-                ${show('skills')&&skills.length?`<div class="s-section"><div class="s-title" style="color:${c}">Skills</div>${skills.map(s=>`<span class="skill-pill">${s}</span>`).join('')}</div>`:''}
+                ${show('skills')&&skills.length?`<div class="s-section"><div class="s-title" style="color:${c}">Skills</div><div>${skills.map(s=>`<span class="skill-pill">${s}</span>`).join('')}</div></div>`:''}
                 ${show('languages')&&d.languages?`<div class="s-section"><div class="s-title" style="color:${c}">Languages</div>${d.languages.split(',').map(l=>`<div class="s-item">${l.trim()}</div>`).join('')}</div>`:''}
             </div>
             <div class="main">
-                ${show('summary')&&d.summary?`<div class="m-section"><div class="m-title" style="border-color:${c};color:#111">Summary</div><p class="summary-text" style="font-size:9.5pt;color:#374151;line-height:1.6">${d.summary}</p></div>`:''}
-                ${show('education')&&d.educations.some(e=>e.degree)?`<div class="m-section"><div class="m-title" style="border-color:${c};color:#111">Education</div>${d.educations.map(e=>e.degree?`<div class="m-item"><div class="m-item-title">${e.degree}</div><div class="m-item-sub">${e.school}</div><div class="m-item-date" style="color:${c}">${e.start}${e.end?' — '+e.end:''}${e.gpa?' · '+e.gpa:''}</div></div>`:''). join('')}</div>`:''}
-                ${show('experience')&&d.experiences.some(e=>e.title)?`<div class="m-section"><div class="m-title" style="border-color:${c};color:#111">Experience</div>${d.experiences.map(e=>e.title?`<div class="m-item"><div class="m-item-title">${e.title}</div><div class="m-item-sub">${e.company}</div><div class="m-item-date" style="color:${c}">${e.start}${e.end?' — '+e.end:''}</div><div class="m-item-desc">${e.desc}</div></div>`:'').join('')}</div>`:''}
-                ${show('projects')&&d.projects?`<div class="m-section"><div class="m-title" style="border-color:${c};color:#111">Projects</div><p style="font-size:9pt;color:#374151">${d.projects}</p></div>`:''}
-                ${show('certifications')&&d.certifications?`<div class="m-section"><div class="m-title" style="border-color:${c};color:#111">Certifications</div><p style="font-size:9pt;color:#374151">${d.certifications}</p></div>`:''}
-                ${show('awards')&&d.awards?`<div class="m-section"><div class="m-title" style="border-color:${c};color:#111">Awards</div><p style="font-size:9pt;color:#374151">${d.awards}</p></div>`:''}
-                ${show('volunteer')&&d.volunteer?`<div class="m-section"><div class="m-title" style="border-color:${c};color:#111">Volunteer</div><p style="font-size:9pt;color:#374151">${d.volunteer}</p></div>`:''}
+                ${show('summary')&&d.summary?`<div class="m-section"><div class="m-title" style="border-color:${c}">Summary</div><p style="font-size:9pt;color:#374151;line-height:1.6">${d.summary}</p></div>`:''}
+                ${show('education')&&d.educations.some(e=>e.degree)?`<div class="m-section"><div class="m-title" style="border-color:${c}">Education</div>${d.educations.map(e=>e.degree?`<div class="m-item"><div class="m-item-title">${e.degree}</div><div class="m-item-sub">${e.school}</div><div class="m-item-date" style="color:${c}">${e.start}${e.end?' — '+e.end:''}${e.gpa?' · '+e.gpa:''}</div></div>`:'').join('')}</div>`:''}
+                ${show('experience')&&d.experiences.some(e=>e.title)?`<div class="m-section"><div class="m-title" style="border-color:${c}">Experience</div>${d.experiences.map(e=>e.title?`<div class="m-item"><div class="m-item-title">${e.title}</div><div class="m-item-sub">${e.company}</div><div class="m-item-date" style="color:${c}">${e.start}${e.end?' — '+e.end:''}</div><div class="m-item-desc">${e.desc}</div></div>`:'').join('')}</div>`:''}
+                ${show('projects')&&d.projects?`<div class="m-section"><div class="m-title" style="border-color:${c}">Projects</div><p style="font-size:8.5pt;color:#374151">${d.projects}</p></div>`:''}
+                ${show('certifications')&&d.certifications?`<div class="m-section"><div class="m-title" style="border-color:${c}">Certifications</div><p style="font-size:8.5pt;color:#374151">${d.certifications}</p></div>`:''}
+                ${show('awards')&&d.awards?`<div class="m-section"><div class="m-title" style="border-color:${c}">Awards</div><p style="font-size:8.5pt;color:#374151">${d.awards}</p></div>`:''}
+                ${show('volunteer')&&d.volunteer?`<div class="m-section"><div class="m-title" style="border-color:${c}">Volunteer</div><p style="font-size:8.5pt;color:#374151">${d.volunteer}</p></div>`:''}
             </div>
         </div>`;
 
-    } else if(currentTemplate === 'faang') {
+    } else if (currentTemplate === 'faang') {
         html = `<div class="tpl-faang" style="font-family:'${f}',sans-serif;font-size:${sz}pt">
             <div class="f-header">
                 <div class="f-header-left">
-                    ${photoEl('f-photo',70)}
+                    ${photoEl('f-photo',68)}
                     <div>
                         <div class="f-name">${d.fullName||'Your Name'}</div>
                         <div class="f-role">${d.jobTitle||'Your Title'}</div>
@@ -858,19 +865,19 @@ function updatePreview() {
                     ${d.github?`<div>${d.github}</div>`:''}
                 </div>
             </div>
-            ${show('summary')&&d.summary?`<div class="f-section"><div class="f-section-title">Summary</div><p style="font-size:9.5pt;color:#374151;line-height:1.6">${d.summary}</p></div><hr class="f-divider">`:''}
+            ${show('summary')&&d.summary?`<div class="f-section"><div class="f-section-title">Summary</div><p style="font-size:9pt;color:#374151;line-height:1.6">${d.summary}</p></div><hr class="f-divider">`:''}
             ${show('experience')&&d.experiences.some(e=>e.title)?`<div class="f-section"><div class="f-section-title">Experience</div>${d.experiences.map(e=>e.title?`<div class="f-item"><div class="f-item-left"><div class="f-item-title">${e.title}</div><div class="f-item-sub">${e.company}</div><div class="f-item-desc">${e.desc}</div></div><div class="f-item-date">${e.start}${e.end?' — '+e.end:''}</div></div>`:'').join('')}</div><hr class="f-divider">`:''}
             ${show('education')&&d.educations.some(e=>e.degree)?`<div class="f-section"><div class="f-section-title">Education</div>${d.educations.map(e=>e.degree?`<div class="f-item"><div class="f-item-left"><div class="f-item-title">${e.degree}</div><div class="f-item-sub">${e.school}${e.gpa?' · '+e.gpa:''}</div></div><div class="f-item-date">${e.start}${e.end?' — '+e.end:''}</div></div>`:'').join('')}</div><hr class="f-divider">`:''}
             ${show('skills')&&d.techSkills?`<div class="f-section"><div class="f-section-title">Skills</div><div class="f-skills">${skillTags(d.techSkills,'f-skill')}</div></div><hr class="f-divider">`:''}
-            ${show('projects')&&d.projects?`<div class="f-section"><div class="f-section-title">Projects</div><p style="font-size:9pt;color:#374151">${d.projects}</p></div><hr class="f-divider">`:''}
-            ${show('certifications')&&d.certifications?`<div class="f-section"><div class="f-section-title">Certifications</div><p style="font-size:9pt;color:#374151">${d.certifications}</p></div>`:''}
+            ${show('projects')&&d.projects?`<div class="f-section"><div class="f-section-title">Projects</div><p style="font-size:8.5pt;color:#374151">${d.projects}</p></div><hr class="f-divider">`:''}
+            ${show('certifications')&&d.certifications?`<div class="f-section"><div class="f-section-title">Certifications</div><p style="font-size:8.5pt;color:#374151">${d.certifications}</p></div>`:''}
         </div>`;
 
-    } else if(currentTemplate === 'anvil') {
+    } else if (currentTemplate === 'anvil') {
         const allSkills = [d.techSkills, d.softSkills].filter(s=>s).join(', ');
         html = `<div class="tpl-anvil" style="font-size:${sz}pt">
             <div class="a-header">
-                ${photoEl('a-photo',75)}
+                ${photoEl('a-photo',72)}
                 <div>
                     <div class="a-name">${d.fullName||'Your Name'}</div>
                     <div class="a-role">${d.jobTitle||'Your Title'}</div>
@@ -879,25 +886,25 @@ function updatePreview() {
             </div>
             <div class="a-body">
                 <div>
-                    ${show('summary')&&d.summary?`<div class="a-section"><div class="a-section-title">Profile</div><p style="font-size:9pt;color:#374151;line-height:1.6">${d.summary}</p></div>`:''}
+                    ${show('summary')&&d.summary?`<div class="a-section"><div class="a-section-title">Profile</div><p style="font-size:8.5pt;color:#374151;line-height:1.6">${d.summary}</p></div>`:''}
                     ${show('experience')&&d.experiences.some(e=>e.title)?`<div class="a-section"><div class="a-section-title">Experience</div>${d.experiences.map(e=>e.title?`<div class="a-item"><div class="a-item-title">${e.title}</div><div class="a-item-sub">${e.company} | ${e.start}${e.end?' — '+e.end:''}</div><div class="a-item-desc">${e.desc}</div></div>`:'').join('')}</div>`:''}
-                    ${show('projects')&&d.projects?`<div class="a-section"><div class="a-section-title">Projects</div><p style="font-size:9pt;color:#374151">${d.projects}</p></div>`:''}
+                    ${show('projects')&&d.projects?`<div class="a-section"><div class="a-section-title">Projects</div><p style="font-size:8pt;color:#374151">${d.projects}</p></div>`:''}
                 </div>
                 <div>
                     ${show('education')&&d.educations.some(e=>e.degree)?`<div class="a-section"><div class="a-section-title">Education</div>${d.educations.map(e=>e.degree?`<div class="a-item"><div class="a-item-title">${e.degree}</div><div class="a-item-sub">${e.school}</div><div class="a-item-sub">${e.start}${e.end?' — '+e.end:''}${e.gpa?' | '+e.gpa:''}</div></div>`:'').join('')}</div>`:''}
                     ${show('skills')&&allSkills?`<div class="a-section"><div class="a-section-title">Skills</div><div>${allSkills.split(',').map(s=>`<span class="a-skill">${s.trim()}</span>`).join('')}</div></div>`:''}
-                    ${show('languages')&&d.languages?`<div class="a-section"><div class="a-section-title">Languages</div><p style="font-size:9pt">${d.languages}</p></div>`:''}
-                    ${show('certifications')&&d.certifications?`<div class="a-section"><div class="a-section-title">Certifications</div><p style="font-size:9pt;color:#374151">${d.certifications}</p></div>`:''}
-                    ${show('awards')&&d.awards?`<div class="a-section"><div class="a-section-title">Awards</div><p style="font-size:9pt;color:#374151">${d.awards}</p></div>`:''}
+                    ${show('languages')&&d.languages?`<div class="a-section"><div class="a-section-title">Languages</div><p style="font-size:8pt">${d.languages}</p></div>`:''}
+                    ${show('certifications')&&d.certifications?`<div class="a-section"><div class="a-section-title">Certifications</div><p style="font-size:8pt;color:#374151">${d.certifications}</p></div>`:''}
+                    ${show('awards')&&d.awards?`<div class="a-section"><div class="a-section-title">Awards</div><p style="font-size:8pt;color:#374151">${d.awards}</p></div>`:''}
                 </div>
             </div>
         </div>`;
 
-    } else if(currentTemplate === 'spark') {
+    } else if (currentTemplate === 'spark') {
         const skills = (d.techSkills||'').split(',').map(s=>s.trim()).filter(s=>s);
         html = `<div class="tpl-spark" style="font-size:${sz}pt">
             <div class="sp-header">
-                ${photoEl('sp-photo',85)}
+                ${photoEl('sp-photo',82)}
                 <div>
                     <div class="sp-name">${d.fullName||'Your Name'}</div>
                     <div class="sp-role">${d.jobTitle||'Your Title'}</div>
@@ -910,26 +917,26 @@ function updatePreview() {
             </div>
             <div class="sp-body">
                 <div class="sp-main">
-                    ${show('summary')&&d.summary?`<div class="sp-section"><div class="sp-section-title">About</div><p style="font-size:9.5pt;color:#374151;line-height:1.6">${d.summary}</p></div>`:''}
+                    ${show('summary')&&d.summary?`<div class="sp-section"><div class="sp-section-title">About</div><p style="font-size:9pt;color:#374151;line-height:1.6">${d.summary}</p></div>`:''}
                     ${show('experience')&&d.experiences.some(e=>e.title)?`<div class="sp-section"><div class="sp-section-title">Experience</div>${d.experiences.map(e=>e.title?`<div class="sp-item"><div class="sp-item-title">${e.title}</div><div class="sp-item-sub">${e.company}</div><div class="sp-item-date">${e.start}${e.end?' — '+e.end:''}</div><div class="sp-item-desc">${e.desc}</div></div>`:'').join('')}</div>`:''}
                     ${show('education')&&d.educations.some(e=>e.degree)?`<div class="sp-section"><div class="sp-section-title">Education</div>${d.educations.map(e=>e.degree?`<div class="sp-item"><div class="sp-item-title">${e.degree}</div><div class="sp-item-sub">${e.school}</div><div class="sp-item-date">${e.start}${e.end?' — '+e.end:''}${e.gpa?' · '+e.gpa:''}</div></div>`:'').join('')}</div>`:''}
-                    ${show('projects')&&d.projects?`<div class="sp-section"><div class="sp-section-title">Projects</div><p style="font-size:9pt;color:#374151">${d.projects}</p></div>`:''}
+                    ${show('projects')&&d.projects?`<div class="sp-section"><div class="sp-section-title">Projects</div><p style="font-size:8.5pt;color:#374151">${d.projects}</p></div>`:''}
                 </div>
                 <div class="sp-sidebar">
                     ${show('skills')&&skills.length?`<div class="sp-section"><div class="sp-section-title" style="color:#764ba2">Skills</div>${skills.slice(0,7).map(s=>`<div class="sp-skill-bar"><div class="sp-skill-label">${s}</div><div class="sp-skill-bg"><div class="sp-skill-fill" style="width:${Math.floor(Math.random()*25)+68}%"></div></div></div>`).join('')}</div>`:''}
                     ${show('languages')&&d.languages?`<div class="sp-section"><div class="sp-section-title" style="color:#764ba2">Languages</div>${d.languages.split(',').map(l=>`<span class="sp-tag">${l.trim()}</span>`).join('')}</div>`:''}
-                    ${show('certifications')&&d.certifications?`<div class="sp-section"><div class="sp-section-title" style="color:#764ba2">Certifications</div><p style="font-size:8.5pt;color:#374151">${d.certifications}</p></div>`:''}
-                    ${show('awards')&&d.awards?`<div class="sp-section"><div class="sp-section-title" style="color:#764ba2">Awards</div><p style="font-size:8.5pt;color:#374151">${d.awards}</p></div>`:''}
-                    ${show('volunteer')&&d.volunteer?`<div class="sp-section"><div class="sp-section-title" style="color:#764ba2">Volunteer</div><p style="font-size:8.5pt;color:#374151">${d.volunteer}</p></div>`:''}
+                    ${show('certifications')&&d.certifications?`<div class="sp-section"><div class="sp-section-title" style="color:#764ba2">Certifications</div><p style="font-size:8pt;color:#374151">${d.certifications}</p></div>`:''}
+                    ${show('awards')&&d.awards?`<div class="sp-section"><div class="sp-section-title" style="color:#764ba2">Awards</div><p style="font-size:8pt;color:#374151">${d.awards}</p></div>`:''}
+                    ${show('volunteer')&&d.volunteer?`<div class="sp-section"><div class="sp-section-title" style="color:#764ba2">Volunteer</div><p style="font-size:8pt;color:#374151">${d.volunteer}</p></div>`:''}
                 </div>
             </div>
         </div>`;
 
-    } else if(currentTemplate === 'phoenix') {
+    } else if (currentTemplate === 'phoenix') {
         html = `<div class="tpl-phoenix" style="font-size:${sz}pt">
             <div class="ph-header">
                 <div class="ph-left">
-                    ${photoEl('ph-photo',75)}
+                    ${photoEl('ph-photo',72)}
                     <div>
                         <div class="ph-name">${d.fullName||'Your Name'}</div>
                         <div class="ph-role" style="color:${c}">${d.jobTitle||'Your Title'}</div>
@@ -944,17 +951,17 @@ function updatePreview() {
             </div>
             <div class="ph-body">
                 <div class="ph-main">
-                    ${show('summary')&&d.summary?`<div class="ph-section"><div class="ph-section-title" style="border-color:${c}">Summary</div><p style="font-size:9.5pt;color:#374151;line-height:1.6;font-family:'Geist',sans-serif">${d.summary}</p></div>`:''}
+                    ${show('summary')&&d.summary?`<div class="ph-section"><div class="ph-section-title" style="border-color:${c}">Summary</div><p style="font-size:9pt;color:#374151;line-height:1.6;font-family:'Geist',sans-serif">${d.summary}</p></div>`:''}
                     ${show('experience')&&d.experiences.some(e=>e.title)?`<div class="ph-section"><div class="ph-section-title" style="border-color:${c}">Experience</div>${d.experiences.map(e=>e.title?`<div class="ph-item"><div class="ph-item-title">${e.title}</div><div class="ph-item-sub">${e.company}</div><div class="ph-item-date" style="color:${c}">${e.start}${e.end?' — '+e.end:''}</div><div class="ph-item-desc">${e.desc}</div></div>`:'').join('')}</div>`:''}
-                    ${show('projects')&&d.projects?`<div class="ph-section"><div class="ph-section-title" style="border-color:${c}">Projects</div><p style="font-size:9pt;color:#374151;font-family:'Geist',sans-serif">${d.projects}</p></div>`:''}
+                    ${show('projects')&&d.projects?`<div class="ph-section"><div class="ph-section-title" style="border-color:${c}">Projects</div><p style="font-size:8.5pt;color:#374151;font-family:'Geist',sans-serif">${d.projects}</p></div>`:''}
                 </div>
                 <div class="ph-sidebar">
                     ${show('education')&&d.educations.some(e=>e.degree)?`<div class="ph-section"><div class="ph-section-title" style="border-color:${c}">Education</div>${d.educations.map(e=>e.degree?`<div class="ph-item"><div class="ph-item-title">${e.degree}</div><div class="ph-item-sub">${e.school}</div><div class="ph-item-date" style="color:${c}">${e.start}${e.end?' — '+e.end:''}${e.gpa?' · '+e.gpa:''}</div></div>`:'').join('')}</div>`:''}
                     ${show('skills')&&d.techSkills?`<div class="ph-section"><div class="ph-section-title" style="border-color:${c}">Skills</div><div>${skillTags(d.techSkills,'ph-skill')}</div></div>`:''}
                     ${show('languages')&&d.languages?`<div class="ph-section"><div class="ph-section-title" style="border-color:${c}">Languages</div><div>${skillTags(d.languages,'ph-skill')}</div></div>`:''}
-                    ${show('certifications')&&d.certifications?`<div class="ph-section"><div class="ph-section-title" style="border-color:${c}">Certifications</div><p style="font-size:8.5pt;color:#374151;font-family:'Geist',sans-serif">${d.certifications}</p></div>`:''}
-                    ${show('awards')&&d.awards?`<div class="ph-section"><div class="ph-section-title" style="border-color:${c}">Awards</div><p style="font-size:8.5pt;color:#374151;font-family:'Geist',sans-serif">${d.awards}</p></div>`:''}
-                    ${show('volunteer')&&d.volunteer?`<div class="ph-section"><div class="ph-section-title" style="border-color:${c}">Volunteer</div><p style="font-size:8.5pt;color:#374151;font-family:'Geist',sans-serif">${d.volunteer}</p></div>`:''}
+                    ${show('certifications')&&d.certifications?`<div class="ph-section"><div class="ph-section-title" style="border-color:${c}">Certifications</div><p style="font-size:8pt;color:#374151;font-family:'Geist',sans-serif">${d.certifications}</p></div>`:''}
+                    ${show('awards')&&d.awards?`<div class="ph-section"><div class="ph-section-title" style="border-color:${c}">Awards</div><p style="font-size:8pt;color:#374151;font-family:'Geist',sans-serif">${d.awards}</p></div>`:''}
+                    ${show('volunteer')&&d.volunteer?`<div class="ph-section"><div class="ph-section-title" style="border-color:${c}">Volunteer</div><p style="font-size:8pt;color:#374151;font-family:'Geist',sans-serif">${d.volunteer}</p></div>`:''}
                 </div>
             </div>
         </div>`;
@@ -963,9 +970,9 @@ function updatePreview() {
     document.getElementById('cvPreview').innerHTML = html;
 }
 
-function updateAll() { updatePreview(); updateATS(); }
+function updateAll() { updatePreview(); updateATS(); updateDownloadBtn(); }
 
-// ============ CUSTOMIZATION ============
+// ========== CUSTOMIZATION ==========
 function applyCustom() {
     document.getElementById('colorPicker').value = custom.color;
     document.getElementById('fontSelect').value = custom.font;
@@ -974,12 +981,11 @@ function applyCustom() {
     document.getElementById('showPhoto').checked = custom.showPhoto;
     Object.keys(custom.sections).forEach(key => {
         const el = document.getElementById('sec-' + key);
-        if(el) el.checked = custom.sections[key];
+        if (el) el.checked = custom.sections[key];
     });
 }
 
 function saveCustom() { localStorage.setItem('forge_custom', JSON.stringify(custom)); }
-
 function updateColor(val) { custom.color = val; saveCustom(); updatePreview(); }
 function updateFont(val) { custom.font = val; saveCustom(); updatePreview(); }
 function updateFontSize(val) { custom.fontSize = parseInt(val); document.getElementById('fontSizeVal').textContent = val; saveCustom(); updatePreview(); }
@@ -997,16 +1003,21 @@ function toggleDrawer() {
     document.getElementById('drawerFab').innerHTML = d.classList.contains('open') ? '<i class="fas fa-times"></i>' : '<i class="fas fa-palette"></i>';
 }
 
-// ============ PHOTO UPLOAD ============
+// ========== PHOTO ==========
 function handlePhoto(input) {
     const file = input.files[0];
-    if(!file) return;
+    if (!file) return;
     const reader = new FileReader();
-    reader.onload = e => { profilePhoto = e.target.result; localStorage.setItem('forge_photo', profilePhoto); updatePreview(); showToast('📸 Photo uploaded!'); };
+    reader.onload = e => {
+        profilePhoto = e.target.result;
+        localStorage.setItem('forge_photo', profilePhoto);
+        updatePreview();
+        showToast('📸 Photo uploaded!');
+    };
     reader.readAsDataURL(file);
 }
 
-// ============ AI HELPERS ============
+// ========== AI HELPERS ==========
 function generateSummary() {
     const role = formData.jobTitle || 'professional';
     const skills = formData.techSkills || '';
@@ -1022,31 +1033,63 @@ function generateSummary() {
 }
 
 function suggestSkills() {
-    const sets = {
-        tech: 'Python, JavaScript, React, Node.js, SQL, Git, REST APIs, HTML/CSS',
-        business: 'Excel, Financial Analysis, PowerPoint, Project Management, Data Analysis, CRM',
-        medical: 'Patient Care, Clinical Research, Medical Terminology, EMR Systems, HIPAA',
-        creative: 'Figma, Adobe XD, Photoshop, UI/UX Design, Prototyping, Canva',
-        education: 'Curriculum Design, Classroom Management, Google Classroom, Microsoft Office',
-        engineering: 'AutoCAD, MATLAB, SolidWorks, Project Planning, Technical Drawing',
-        other: 'Microsoft Office, Communication, Project Management, Problem Solving, Teamwork'
-    };
-    const tips = ['💡 Try adding "Team Leadership"!', '💡 Add "Agile/Scrum" if you\'re in tech!', '💡 "Critical Thinking" impresses every recruiter!', '💡 Add "Cross-functional Collaboration"!'];
     const el = document.getElementById('techSkills');
-    el.value = sets.other;
+    el.value = 'Python, JavaScript, React, Node.js, SQL, Git, REST APIs, HTML, CSS, Problem Solving';
     formData.techSkills = el.value;
-    saveData(); updateAll(); showToast(tips[Math.floor(Math.random()*tips.length)]);
+    saveData(); updateAll();
+    showToast('💡 Try adding "Team Leadership" too!');
 }
 
-// ============ TOAST ============
+// ========== TOAST ==========
 function showToast(msg) {
     const t = document.getElementById('toast');
     t.textContent = msg;
     t.classList.add('show');
-    setTimeout(() => t.classList.remove('show'), 2500);
+    clearTimeout(window._toastTimer);
+    window._toastTimer = setTimeout(() => t.classList.remove('show'), 2500);
 }
 
-// ============ PDF DOWNLOAD ============
+// ========== SAVE / LOAD FILE ==========
+function saveToFile() {
+    const data = { formData, template: currentTemplate, custom };
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `forge-cv-${(formData.fullName||'resume').replace(/\s+/g,'-').toLowerCase()}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+    document.getElementById('dotMenu').classList.remove('open');
+    showToast('💾 Resume saved to file!');
+}
+
+function loadFromFile() {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = '.json';
+    input.onchange = e => {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = ev => {
+            try {
+                const data = JSON.parse(ev.target.result);
+                if (data.formData) formData = { ...formData, ...data.formData };
+                if (data.template) currentTemplate = data.template;
+                if (data.custom) custom = { ...custom, ...data.custom };
+                saveData(); saveCustom();
+                renderEduCards(); renderExpCards(); fillTextFields();
+                applyCustom(); updateAll();
+                showToast('📂 Resume loaded successfully!');
+            } catch(err) { showToast('❌ Invalid file format!'); }
+        };
+        reader.readAsText(file);
+    };
+    input.click();
+    document.getElementById('dotMenu').classList.remove('open');
+}
+
+// ========== PDF DOWNLOAD ==========
 document.getElementById('downloadBtn').onclick = () => {
     const btn = document.getElementById('downloadBtn');
     btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Preparing...';
@@ -1055,13 +1098,16 @@ document.getElementById('downloadBtn').onclick = () => {
         window.print();
         btn.innerHTML = '<i class="fas fa-download"></i> Download PDF';
         btn.disabled = false;
-        showToast('✅ PDF ready!');
+        showToast('✅ PDF ready to save!');
     }, 1200);
 };
 
-// ============ CLEAR ALL ============
+// ========== CLEAR ALL ==========
 function clearAll() {
-    if(confirm('Clear everything and start fresh?')) { localStorage.clear(); location.reload(); }
+    if (confirm('Clear everything and start fresh?')) {
+        localStorage.clear();
+        location.reload();
+    }
 }
 </script>
 </body>
