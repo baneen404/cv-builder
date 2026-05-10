@@ -2,64 +2,657 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Forge.cv – Free AI Resume Builder with ATS Score</title>
     <meta name="description" content="Paste any job description. Forge gives you live ATS score, missing keywords, and beautiful templates. Free forever.">
     <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            background: #0A0A0B;
-            font-family: 'Geist', sans-serif;
-            color: #FAFAFA;
-            line-height: 1.5;
+
+        :root {
+            --bg: #0A0A0B;
+            --surface: #111115;
+            --border: rgba(249,115,22,0.2);
+            --text: #FAFAFA;
+            --muted: #a0a0a0;
+            --primary: #F97316;
+            --primary-hover: #ff9033;
         }
-        .navbar { display: flex; justify-content: space-between; align-items: center; padding: 1.2rem 3rem; border-bottom: 1px solid rgba(249,115,22,0.3); flex-wrap: wrap; gap: 1rem; }
-        .logo { font-size: 1.8rem; font-weight: 700; letter-spacing: -0.5px; }
-        .logo span { color: #F97316; }
-        .nav-links { display: flex; gap: 2rem; align-items: center; flex-wrap: wrap; }
-        .nav-links a { color: #FAFAFA; text-decoration: none; font-weight: 500; transition: 0.2s; }
-        .nav-links a:hover { color: #F97316; }
-        .nav-btn { background: #F97316; color: #0A0A0B; padding: 0.5rem 1.2rem; border-radius: 40px; font-weight: 600; text-decoration: none; }
-        .hero { max-width: 1100px; margin: 0 auto; padding: 4rem 2rem; text-align: center; }
-        .hero h1 { font-size: 3.5rem; font-weight: 700; background: linear-gradient(135deg, #FFFFFF, #F97316); -webkit-background-clip: text; background-clip: text; color: transparent; margin-bottom: 1rem; }
-        .hero p { font-size: 1.2rem; color: #a0a0a0; max-width: 700px; margin: 0 auto 2rem; }
-        .cta-btn { background: #F97316; border: none; color: #0A0A0B; font-size: 1.2rem; font-weight: 600; padding: 0.8rem 2rem; border-radius: 60px; cursor: pointer; transition: 0.2s; margin-bottom: 1rem; display: inline-block; text-decoration: none; }
-        .cta-btn:hover { background: #ff9033; transform: scale(1.02); }
-        .badge { background: rgba(249,115,22,0.2); padding: 0.3rem 1rem; border-radius: 40px; display: inline-block; font-size: 0.8rem; margin: 1rem 0; }
-        .steps { display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap; margin: 3rem 0; }
-        .step { background: #111115; padding: 1.5rem; border-radius: 24px; width: 260px; border: 1px solid #2a2a2e; }
-        .step h3 { color: #F97316; margin-bottom: 0.5rem; }
-        .footer { text-align: center; padding: 2rem; border-top: 1px solid #222; font-size: 0.8rem; color: #666; }
-        @media (max-width: 700px) { .hero h1 { font-size: 2rem; } .navbar { padding: 1rem; } .nav-links { gap: 1rem; } .steps { flex-direction: column; align-items: center; } }
+
+        body {
+            background: var(--bg);
+            font-family: 'Geist', sans-serif;
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* NAVBAR */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.2rem 4rem;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            background: rgba(10,10,11,0.85);
+            backdrop-filter: blur(12px);
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 1.6rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .logo span { color: var(--primary); }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--muted);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover { color: var(--text); }
+
+        .nav-btn {
+            background: var(--primary);
+            color: #0A0A0B;
+            padding: 0.5rem 1.4rem;
+            border-radius: 40px;
+            font-weight: 700;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: background 0.2s, transform 0.2s;
+        }
+
+        .nav-btn:hover {
+            background: var(--primary-hover);
+            transform: translateY(-1px);
+        }
+
+        /* HERO */
+        .hero {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 6rem 2rem 4rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .hero-text h1 {
+            font-size: 3.8rem;
+            font-weight: 700;
+            line-height: 1.1;
+            letter-spacing: -1px;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-text h1 .gradient {
+            background: linear-gradient(135deg, #F97316, #ff6b6b);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hero-text p {
+            font-size: 1.15rem;
+            color: var(--muted);
+            max-width: 480px;
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 2.5rem;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: #0A0A0B;
+            padding: 0.75rem 1.8rem;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 1rem;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(249,115,22,0.35);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text);
+            padding: 0.75rem 1.8rem;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 1rem;
+            text-decoration: none;
+            border: 1px solid var(--border);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .hero-badges {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            background: rgba(249,115,22,0.1);
+            border: 1px solid rgba(249,115,22,0.3);
+            color: var(--primary);
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        /* HERO VISUAL */
+        .hero-visual {
+            position: relative;
+        }
+
+        .mockup-card {
+            background: #111115;
+            border: 1px solid #2a2a2e;
+            border-radius: 20px;
+            padding: 1.5rem;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+            animation: float 4s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-12px); }
+        }
+
+        .mockup-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .mockup-title {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--muted);
+        }
+
+        .ats-badge {
+            background: rgba(34,197,94,0.15);
+            color: #22C55E;
+            padding: 0.2rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        .mockup-bar-wrap {
+            background: #1a1a1e;
+            border-radius: 10px;
+            height: 8px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+
+        .mockup-bar {
+            height: 8px;
+            background: linear-gradient(90deg, #22C55E, #86efac);
+            border-radius: 10px;
+            width: 82%;
+            animation: grow 2s ease-out forwards;
+        }
+
+        @keyframes grow {
+            from { width: 0%; }
+            to { width: 82%; }
+        }
+
+        .mockup-lines {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .mockup-line {
+            background: #2a2a2e;
+            border-radius: 4px;
+            height: 10px;
+        }
+
+        .mockup-line.short { width: 60%; }
+        .mockup-line.orange { background: rgba(249,115,22,0.4); width: 40%; }
+
+        .mockup-keywords {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        .kw-tag {
+            background: rgba(249,115,22,0.15);
+            color: var(--primary);
+            padding: 0.2rem 0.7rem;
+            border-radius: 20px;
+            font-size: 0.72rem;
+            font-weight: 500;
+        }
+
+        .kw-tag.missing {
+            background: rgba(239,68,68,0.15);
+            color: #EF4444;
+        }
+
+        /* FEATURES */
+        .section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 5rem 2rem;
+        }
+
+        .section-label {
+            color: var(--primary);
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 1rem;
+        }
+
+        .section-sub {
+            color: var(--muted);
+            font-size: 1.05rem;
+            max-width: 600px;
+            margin-bottom: 3rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        .feature-card {
+            background: var(--surface);
+            border: 1px solid #2a2a2e;
+            border-radius: 20px;
+            padding: 2rem;
+            transition: border-color 0.3s, transform 0.3s;
+        }
+
+        .feature-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-4px);
+        }
+
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(249,115,22,0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .feature-card h3 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-card p {
+            color: var(--muted);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        /* HOW IT WORKS */
+        .how-section {
+            background: var(--surface);
+            border-top: 1px solid #2a2a2e;
+            border-bottom: 1px solid #2a2a2e;
+        }
+
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .step-card {
+            text-align: center;
+            padding: 2rem 1rem;
+            position: relative;
+        }
+
+        .step-card::after {
+            content: '→';
+            position: absolute;
+            right: -1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--primary);
+            font-size: 1.5rem;
+        }
+
+        .step-card:last-child::after { display: none; }
+
+        .step-number {
+            width: 52px;
+            height: 52px;
+            background: rgba(249,115,22,0.1);
+            border: 2px solid var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 0 auto 1.2rem;
+        }
+
+        .step-card h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .step-card p {
+            color: var(--muted);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .step-icon {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        /* CTA SECTION */
+        .cta-section {
+            text-align: center;
+            padding: 6rem 2rem;
+            background: radial-gradient(ellipse at center, rgba(249,115,22,0.08) 0%, transparent 70%);
+        }
+
+        .cta-section h2 {
+            font-size: 3rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 1rem;
+        }
+
+        .cta-section p {
+            color: var(--muted);
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+
+        /* FOOTER */
+        .footer {
+            border-top: 1px solid #1a1a1e;
+            padding: 2.5rem 4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .footer-logo {
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .footer-logo span { color: var(--primary); }
+
+        .footer p {
+            color: var(--muted);
+            font-size: 0.85rem;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .footer-links a {
+            color: var(--muted);
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover { color: var(--text); }
+
+        /* DIVIDER */
+        .divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+            margin: 0 4rem;
+            opacity: 0.3;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 900px) {
+            .hero { grid-template-columns: 1fr; padding: 3rem 1.5rem; }
+            .hero-visual { display: none; }
+            .hero-text h1 { font-size: 2.5rem; }
+            .features-grid { grid-template-columns: 1fr 1fr; }
+            .steps-grid { grid-template-columns: 1fr; }
+            .step-card::after { display: none; }
+            .navbar { padding: 1rem 1.5rem; }
+            .nav-links { gap: 1rem; }
+            .footer { flex-direction: column; text-align: center; padding: 2rem; }
+        }
+
+        @media (max-width: 600px) {
+            .features-grid { grid-template-columns: 1fr; }
+            .hero-text h1 { font-size: 2rem; }
+            .section-title { font-size: 1.8rem; }
+        }
     </style>
 </head>
 <body>
+
+<!-- NAVBAR -->
 <nav class="navbar">
     <div class="logo">forge<span>.cv</span></div>
     <div class="nav-links">
         <a href="#">Home</a>
-        <a href="#">Templates</a>
-        <a href="#">Roast Mode</a>
-        <a href="#" class="nav-btn" id="startBtn">Forge My Resume</a>
+        <a href="#features">Features</a>
+        <a href="#how">How it works</a>
+        <a href="builder.html" class="nav-btn">Start Building →</a>
     </div>
 </nav>
-<div class="hero">
-    <div class="badge">⚡ Used by 2,300+ job seekers</div>
-    <h1>Stop applying.<br>Start forging.</h1>
-    <p>Paste a job description. Forge gives you live ATS score, missing keywords, and beautiful templates.<br>Free forever. No signup.</p>
-    <button class="cta-btn" id="heroBtn">✨ Forge My Resume →</button>
-    <div style="margin-top: 2rem;"><span>📊 Live ATS Score</span> &nbsp;|&nbsp; <span>🤖 Roast Mode</span> &nbsp;|&nbsp; <span>🔍 Keyword matcher</span></div>
-</div>
-<div class="steps">
-    <div class="step"><h3>📝 1. Paste the job description</h3><p>Paste any job description text. Forge instantly highlights skills you're missing.</p></div>
-    <div class="step"><h3>⚙️ 2. Forge your bullets</h3><p>Smart rewrites and live ATS score show exactly what to improve.</p></div>
-    <div class="step"><h3>📄 3. Export & get hired</h3><p>1‑click PDF. Roast mode before you apply. All templates free.</p></div>
-</div>
-<div class="footer">© 2026 Forge.cv — Resumes built, not written. 🔥</div>
-<script>
-    document.getElementById('startBtn').onclick = () => window.location.href = "builder.html";
-    document.getElementById('heroBtn').onclick = () => window.location.href = "builder.html";
-</script>
+
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-text">
+        <h1>Stop applying.<br><span class="gradient">Start forging.</span></h1>
+        <p>Paste a job description and get a live ATS score, missing keywords, and a beautiful resume — in seconds. Free forever.</p>
+        <div class="hero-buttons">
+            <a href="builder.html" class="btn-primary"><i class="fas fa-bolt"></i> Forge My Resume</a>
+            <a href="#how" class="btn-secondary">See how it works</a>
+        </div>
+        <div class="hero-badges">
+            <span class="badge">📊 Live ATS Score</span>
+            <span class="badge">🤖 Roast Mode</span>
+            <span class="badge">🔍 Keyword Matcher</span>
+            <span class="badge">100% Free</span>
+        </div>
+    </div>
+
+    <!-- HERO VISUAL MOCKUP -->
+    <div class="hero-visual">
+        <div class="mockup-card">
+            <div class="mockup-top">
+                <span class="mockup-title">📊 ATS Score Analysis</span>
+                <span class="ats-badge">82% Match ✓</span>
+            </div>
+            <div class="mockup-bar-wrap">
+                <div class="mockup-bar"></div>
+            </div>
+            <div class="mockup-lines">
+                <div class="mockup-line"></div>
+                <div class="mockup-line short"></div>
+                <div class="mockup-line orange"></div>
+                <div class="mockup-line"></div>
+                <div class="mockup-line short"></div>
+            </div>
+            <div class="mockup-keywords">
+                <span class="kw-tag">Python ✓</span>
+                <span class="kw-tag">React ✓</span>
+                <span class="kw-tag">SQL ✓</span>
+                <span class="kw-tag missing">Docker ✗</span>
+                <span class="kw-tag missing">AWS ✗</span>
+                <span class="kw-tag">Git ✓</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- FEATURES -->
+<section class="section" id="features">
+    <div class="section-label">Why Forge.cv</div>
+    <h2 class="section-title">Everything you need.<br>Nothing you don't.</h2>
+    <p class="section-sub">Built for job seekers who are tired of paying for basic features that should be free.</p>
+
+    <div class="features-grid">
+        <div class="feature-card">
+            <div class="feature-icon"><i class="fas fa-chart-line"></i></div>
+            <h3>Live ATS Score</h3>
+            <p>Paste any job description and instantly see how well your resume matches. Know exactly which keywords you're missing.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon"><i class="fas fa-fire"></i></div>
+            <h3>Roast Mode</h3>
+            <p>Get brutally honest feedback on your resume before you apply. Catch weak bullets, missing metrics, and vague language.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon"><i class="fas fa-search"></i></div>
+            <h3>Keyword Matcher</h3>
+            <p>Automatically extract high-value keywords from job postings and see which ones you're missing from your resume.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon"><i class="fas fa-palette"></i></div>
+            <h3>5 Free Templates</h3>
+            <p>Beautiful, professional templates for every industry. From FAANG-style minimal to creative bold layouts. All free.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon"><i class="fas fa-download"></i></div>
+            <h3>1-Click PDF Export</h3>
+            <p>Download your resume as a clean, print-ready PDF instantly. No watermarks. No login required.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon"><i class="fas fa-moon"></i></div>
+            <h3>Dark & Light Mode</h3>
+            <p>Build your resume in whichever mode is easier on your eyes. Your progress is saved automatically.</p>
+        </div>
+    </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- HOW IT WORKS -->
+<section class="how-section" id="how">
+    <div class="section" style="padding-top: 4rem; padding-bottom: 4rem;">
+        <div class="section-label">How it works</div>
+        <h2 class="section-title">Three steps.<br>One great resume.</h2>
+        <p class="section-sub">No account needed. No credit card. Just open, fill, and forge.</p>
+
+        <div class="steps-grid">
+            <div class="step-card">
+                <div class="step-icon">📋</div>
+                <div class="step-number">1</div>
+                <h3>Paste the job description</h3>
+                <p>Drop in any job posting. Forge instantly extracts the keywords and skills the employer wants to see.</p>
+            </div>
+            <div class="step-card">
+                <div class="step-icon">⚙️</div>
+                <div class="step-number">2</div>
+                <h3>Build & optimize your resume</h3>
+                <p>Fill in your details. Watch your ATS score update live. Use Roast Mode to catch weak spots before applying.</p>
+            </div>
+            <div class="step-card">
+                <div class="step-icon">🚀</div>
+                <div class="step-number">3</div>
+                <h3>Export & apply with confidence</h3>
+                <p>Download a clean PDF in one click. No watermarks, no paywalls. Go get that job.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CTA -->
+<section class="cta-section">
+    <h2>Ready to forge<br><span style="color: var(--primary)">your next opportunity?</span></h2>
+    <p>No signup. No credit card. Just results.</p>
+    <a href="builder.html" class="btn-primary" style="font-size: 1.1rem; padding: 0.9rem 2.2rem;">
+        <i class="fas fa-bolt"></i> Start Building Free
+    </a>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+    <div class="footer-logo">forge<span>.cv</span></div>
+    <p style="color: var(--muted); font-size: 0.85rem;">Resumes built, not written. 🔥</p>
+    <div class="footer-links">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="builder.html">Builder</a>
+    </div>
+</footer>
+
 </body>
 </html>
